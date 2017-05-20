@@ -1,7 +1,6 @@
 import org.junit.Test;
 import twitter.Help;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class HelpTest {
