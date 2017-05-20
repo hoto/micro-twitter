@@ -10,5 +10,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'App'
+mainClassName = 'twitter.App'
 

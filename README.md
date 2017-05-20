@@ -24,4 +24,4 @@ A console-based micro scale twitter in Java.
     
 or
 
-    java -classpath ./build/libs/micro-twitter.jar App
+    java -classpath ./build/libs/micro-twitter.jar twitter.App
