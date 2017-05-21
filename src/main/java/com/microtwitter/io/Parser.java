@@ -3,6 +3,8 @@ package com.microtwitter.io;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.microtwitter.io.Intent.*;
+
 public class Parser {
     private final String DELIMITER = " ";
     private final int USER = 0;
@@ -11,28 +13,28 @@ public class Parser {
     private final String EMPTY_PAYLOAD = "";
 
     /**
-     * Parses a command from natural language to a structure.
+     * Parses a command from natural language to a broken down structure.
      */
     public Command parse(String command) {
         String[] tokens = command.split(DELIMITER);
         String user = tokens[USER];
-        if (isWall(tokens)) {
+        if (isWallCommand(tokens)) {
             return wallCommand(user);
         }
         if (hasPayload(tokens)) {
             String intent = tokens[INTENT];
             String payload = getPayload(tokens);
-            if (isPost(intent)) {
+            if (intent.equals(POST.inNaturalLanguage)) {
                 return postCommand(user, payload);
             }
-            if (isFollow(intent)) {
+            if (intent.equals(FOLLOW.inNaturalLanguage)) {
                 return followCommand(user, payload);
             }
         }
         return readCommand(user);
     }
 
-    private boolean isWall(String[] tokens) {
+    private boolean isWallCommand(String[] tokens) {
         return tokens.length == 2;
     }
 
@@ -49,16 +51,8 @@ public class Parser {
         return String.join(DELIMITER, payloadList);
     }
 
-    private boolean isFollow(String intent) {
-        return Intent.FOLLOW.inNaturalLanguage.equals(intent);
-    }
-
     private Command postCommand(String user, String payload) {
         return new Command(user, Intent.POST, payload);
-    }
-
-    private boolean isPost(String intent) {
-        return Intent.POST.inNaturalLanguage.equals(intent);
     }
 
     private Command followCommand(String user, String payload) {
