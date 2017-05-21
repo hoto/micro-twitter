@@ -106,10 +106,13 @@ class TimelineTest extends Specification {
         timeline.post('Bob', 'Damn! We lost!')
         clock.setMillis(2000)
         timeline.post('Bob', 'Good game though.')
+        clock.setMillis(3000)
+        timeline.post('Charlie', "I'm in New York today! Anyone want to have a coffee?")
 
         when:
         List<Message> aliceTimeline = timeline.view('Alice')
         List<Message> bobTimeline = timeline.view('Bob')
+        List<Message> charlieTimeline = timeline.view('Charlie')
 
         then:
         aliceTimeline.get(0).text == 'I love the weather today.'
@@ -118,5 +121,7 @@ class TimelineTest extends Specification {
         bobTimeline.get(0).timestamp == 1000
         bobTimeline.get(1).text == 'Good game though.'
         bobTimeline.get(1).timestamp == 2000
+        charlieTimeline.get(0).text == "I'm in New York today! Anyone want to have a coffee?"
+        charlieTimeline.get(0).timestamp == 3000
     }
 }
