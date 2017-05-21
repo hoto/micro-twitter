@@ -8,17 +8,19 @@ import java.util.Map;
 import static java.util.Collections.singletonList;
 
 public class Timeline {
-    private Map<String, List<String>> timeline = new HashMap<>();
+    private Map<String, List<Message>> timeline = new HashMap<>();
 
-    public List<String> view(String user) {
-        if (timeline.containsKey(user)) return timeline.get(user);
+    public List<Message> view(String user) {
+        if (timeline.containsKey(user))
+            return timeline.get(user);
         return new ArrayList<>();
     }
 
     public void post(String user, String message) {
+        Message msg = new Message(message, 123456);
         if (timeline.containsKey(user))
-            timeline.get(user).add(message);
+            timeline.get(user).add(msg);
         else
-            timeline.put(user, new ArrayList<>(singletonList(message)));
+            timeline.put(user, new ArrayList<>(singletonList(msg)));
     }
 }

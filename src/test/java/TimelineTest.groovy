@@ -1,4 +1,5 @@
 import spock.lang.Specification
+import twitter.Message
 import twitter.Timeline
 
 class TimelineTest extends Specification {
@@ -10,7 +11,7 @@ class TimelineTest extends Specification {
 
     def 'should have no messages when user has no messages'() {
         when:
-        List<String> aliceMessages = timeline.view('Alice')
+        List<Message> aliceMessages = timeline.view('Alice')
 
         then:
         aliceMessages == []
@@ -21,10 +22,10 @@ class TimelineTest extends Specification {
         timeline.post('Alice', 'I love the weather today.')
 
         when:
-        List<String> bobTimeline = timeline.view('Alice')
+        List<Message> aliceTimeline = timeline.view('Alice')
 
         then:
-        bobTimeline == ['I love the weather today.']
+        aliceTimeline.get(0).text == 'I love the weather today.'
     }
 
     def 'should store two messages when user posts same message twice'() {
@@ -33,13 +34,11 @@ class TimelineTest extends Specification {
         timeline.post('Alice', 'I love the weather today.')
 
         when:
-        List<String> aliceTimeline = timeline.view('Alice')
+        List<Message> aliceTimeline = timeline.view('Alice')
 
         then:
-        aliceTimeline == [
-                'I love the weather today.',
-                'I love the weather today.'
-        ]
+        aliceTimeline.get(0).text == 'I love the weather today.'
+        aliceTimeline.get(1).text == 'I love the weather today.'
     }
 
     def 'should store two messages when user posts two messages'() {
@@ -48,10 +47,11 @@ class TimelineTest extends Specification {
         timeline.post('Bob', 'Good game though.')
 
         when:
-        List<String> bobTimeline = timeline.view('Bob')
+        List<Message> bobTimeline = timeline.view('Bob')
 
         then:
-        bobTimeline == ['Damn! We lost!', 'Good game though.']
+        bobTimeline.get(0).text == 'Damn! We lost!'
+        bobTimeline.get(1).text == 'Good game though.'
     }
 
     def 'should store two messages from two different users'() {
@@ -60,11 +60,39 @@ class TimelineTest extends Specification {
         timeline.post('Bob', 'Damn! We lost!')
 
         when:
-        List<String> aliceTimeline = timeline.view('Alice')
-        List<String> bobTimeline = timeline.view('Bob')
+        List<Message> aliceTimeline = timeline.view('Alice')
+        List<Message> bobTimeline = timeline.view('Bob')
 
         then:
-        aliceTimeline == ['I love the weather today.']
-        bobTimeline == ['Damn! We lost!']
+        aliceTimeline.get(0).text == 'I love the weather today.'
+        bobTimeline.get(0).text == 'Damn! We lost!'
+    }
+
+    def 'should store three messages from two different users'() {
+        given:
+        timeline.post('Alice', 'I love the weather today.')
+        timeline.post('Bob', 'Damn! We lost!')
+        timeline.post('Bob', 'Good game though.')
+
+        when:
+        List<Message> aliceTimeline = timeline.view('Alice')
+        List<Message> bobTimeline = timeline.view('Bob')
+
+        then:
+        aliceTimeline.get(0).text == 'I love the weather today.'
+        bobTimeline.get(0).text == 'Damn! We lost!'
+        bobTimeline.get(1).text == 'Good game though.'
+    }
+
+    def 'should store timestamp with the message when user posts'() {
+        given:
+        timeline.post('Alice', 'I love the weather today.')
+
+        when:
+        List<Message> aliceTimeline = timeline.view('Alice')
+
+        then:
+        aliceTimeline.get(0).text == 'I love the weather today.'
+        aliceTimeline.get(0).timestamp == 123456
     }
 }
