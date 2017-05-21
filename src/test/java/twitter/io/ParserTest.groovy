@@ -3,11 +3,13 @@ package twitter.io
 import spock.lang.Specification
 
 class ParserTest extends Specification {
+    private Parser parser;
 
-    def 'should parse user from a command when only user name is in the input'() {
-        given:
-        Parser parser = new Parser()
+    def setup() {
+        parser = new Parser()
+    }
 
+    def 'should set user to Alice when input is: Alice'() {
         when:
         Command command = parser.parse('Alice')
 
@@ -15,4 +17,27 @@ class ParserTest extends Specification {
         command.user == 'Alice'
     }
 
+    def 'should set function to READ when input is: Alice'() {
+        when:
+        Command command = parser.parse('Alice')
+
+        then:
+        command.function == Function.READ
+    }
+
+    def 'should set user to Alice when input is: Alice ->'() {
+        when:
+        Command command = parser.parse('Alice ->')
+
+        then:
+        command.user == 'Alice'
+    }
+
+    def 'should set function to POST when input is: Alice ->'() {
+        when:
+        Command command = parser.parse('Alice ->')
+
+        then:
+        command.function == Function.POST
+    }
 }
