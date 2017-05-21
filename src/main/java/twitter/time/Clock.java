@@ -1,4 +1,4 @@
-package twitter;
+package twitter.time;
 
 public class Clock {
     public long millis() {

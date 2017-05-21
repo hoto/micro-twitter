@@ -1,4 +1,4 @@
-package twitter;
+package twitter.time;
 
 public class FixedClock extends Clock {
     private long timestamp;

@@ -1,6 +1,7 @@
 package twitter
 
 import spock.lang.Specification
+import twitter.time.FixedClock
 
 class TimelineTest extends Specification {
     private Timeline timeline
@@ -13,7 +14,7 @@ class TimelineTest extends Specification {
 
     def 'should have no messages when user never posted'() {
         when:
-        List<Message> aliceMessages = timeline.view('Alice')
+        List<Message> aliceMessages = timeline.read('Alice')
 
         then:
         aliceMessages == []
@@ -24,7 +25,7 @@ class TimelineTest extends Specification {
         timeline.post('Alice', 'I love the weather today')
 
         when:
-        List<Message> aliceTimeline = timeline.view('Alice')
+        List<Message> aliceTimeline = timeline.read('Alice')
 
         then:
         aliceTimeline.get(0).text == 'I love the weather today'
@@ -36,7 +37,7 @@ class TimelineTest extends Specification {
         timeline.post('Bob', 'Good game though.')
 
         when:
-        List<Message> bobTimeline = timeline.view('Bob')
+        List<Message> bobTimeline = timeline.read('Bob')
 
         then:
         bobTimeline.get(0).text == 'Damn! We lost!'
@@ -49,7 +50,7 @@ class TimelineTest extends Specification {
         timeline.post('Alice', 'I love the weather today')
 
         when:
-        List<Message> aliceTimeline = timeline.view('Alice')
+        List<Message> aliceTimeline = timeline.read('Alice')
 
         then:
         aliceTimeline.get(0).text == 'I love the weather today'
@@ -62,8 +63,8 @@ class TimelineTest extends Specification {
         timeline.post('Bob', 'Damn! We lost!')
 
         when:
-        List<Message> aliceTimeline = timeline.view('Alice')
-        List<Message> bobTimeline = timeline.view('Bob')
+        List<Message> aliceTimeline = timeline.read('Alice')
+        List<Message> bobTimeline = timeline.read('Bob')
 
         then:
         aliceTimeline.get(0).text == 'I love the weather today'
@@ -77,8 +78,8 @@ class TimelineTest extends Specification {
         timeline.post('Bob', 'Good game though.')
 
         when:
-        List<Message> aliceTimeline = timeline.view('Alice')
-        List<Message> bobTimeline = timeline.view('Bob')
+        List<Message> aliceTimeline = timeline.read('Alice')
+        List<Message> bobTimeline = timeline.read('Bob')
 
         then:
         aliceTimeline.get(0).text == 'I love the weather today'
@@ -92,7 +93,7 @@ class TimelineTest extends Specification {
         timeline.post('Alice', 'I love the weather today')
 
         when:
-        List<Message> aliceTimeline = timeline.view('Alice')
+        List<Message> aliceTimeline = timeline.read('Alice')
 
         then:
         aliceTimeline.get(0).text == 'I love the weather today'
@@ -110,9 +111,9 @@ class TimelineTest extends Specification {
         timeline.post('Charlie', "I'm in New York today! Anyone want to have a coffee?")
 
         when:
-        List<Message> aliceTimeline = timeline.view('Alice')
-        List<Message> bobTimeline = timeline.view('Bob')
-        List<Message> charlieTimeline = timeline.view('Charlie')
+        List<Message> aliceTimeline = timeline.read('Alice')
+        List<Message> bobTimeline = timeline.read('Bob')
+        List<Message> charlieTimeline = timeline.read('Charlie')
 
         then:
         aliceTimeline.get(0).text == 'I love the weather today'

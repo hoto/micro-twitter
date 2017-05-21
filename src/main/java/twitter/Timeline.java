@@ -1,5 +1,7 @@
 package twitter;
 
+import twitter.time.Clock;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +17,7 @@ public class Timeline {
         this.clock = clock;
     }
 
-    public List<Message> view(String user) {
+    public List<Message> read(String user) {
         if (timeline.containsKey(user))
             return timeline.get(user);
         return new ArrayList<>();
