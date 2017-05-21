@@ -38,10 +38,6 @@ public class Parser {
         return tokens.length == 2;
     }
 
-    private Command wallCommand(String user) {
-        return new Command(user, Intent.WALL, EMPTY_PAYLOAD);
-    }
-
     private boolean hasPayload(String[] tokens) {
         return tokens.length > PAYLOAD;
     }
@@ -49,6 +45,10 @@ public class Parser {
     private String getPayload(String[] tokens) {
         List<String> payloadList = Arrays.asList(tokens).subList(PAYLOAD, tokens.length);
         return String.join(DELIMITER, payloadList);
+    }
+
+    private Command wallCommand(String user) {
+        return new Command(user, Intent.WALL, EMPTY_PAYLOAD);
     }
 
     private Command postCommand(String user, String payload) {
