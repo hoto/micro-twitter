@@ -25,6 +25,7 @@ class ParserTest extends Specification {
         'Bob'                      | 'Bob'     | Function.READ   | ''
         'Bob -> Good game though.' | 'Bob'     | Function.POST   | 'Good game though.'
         'Charlie follows Bob'      | 'Charlie' | Function.FOLLOW | 'Bob'
+        'Charlie wall'             | 'Charlie' | Function.WALL   | ''
     }
 
     def 'should detect user is Bob when input is: Bob'() {
@@ -81,5 +82,13 @@ class ParserTest extends Specification {
 
         then:
         command.payload == 'Bob'
+    }
+
+    def 'should detect function is wall when input is: Charlie wall'() {
+        when:
+        Command command = parser.parse('Charlie wall')
+
+        then:
+        command.function == Function.WALL
     }
 }
