@@ -11,7 +11,7 @@ class ParserTest extends Specification {
     }
 
     @Unroll
-    def 'should detect user, function and payload from all possible commands'() {
+    def 'should detect user, function and payload from all valid commands'() {
         given:
         Command command = parser.parse(input)
 
@@ -21,65 +21,65 @@ class ParserTest extends Specification {
         command.payload == payload
 
         where:
-        input                   | user      | function        | payload
-        'Alice'                 | 'Alice'   | Function.READ   | ''
-        'Alice ->'              | 'Alice'   | Function.POST   | ''
-        'Charlie follows Alice' | 'Charlie' | Function.FOLLOW | 'Alice'
+        input                      | user      | function        | payload
+        'Bob'                      | 'Bob'     | Function.READ   | ''
+        'Bob -> Good game though.' | 'Bob'     | Function.POST   | 'Good game though.'
+        'Charlie follows Bob'      | 'Charlie' | Function.FOLLOW | 'Bob'
     }
 
-    def 'should detect user is Alice when input is: Alice'() {
+    def 'should detect user is Bob when input is: Bob'() {
         when:
-        Command command = parser.parse('Alice')
+        Command command = parser.parse('Bob')
 
         then:
-        command.user == 'Alice'
+        command.user == 'Bob'
     }
 
-    def 'should detect function is reading when input is: Alice'() {
+    def 'should detect function is reading when input is: Bob'() {
         when:
-        Command command = parser.parse('Alice')
+        Command command = parser.parse('Bob')
 
         then:
         command.function == Function.READ
     }
 
-    def 'should detect user is Alice when input is: Alice ->'() {
+    def 'should detect user is Bob when input is: Bob -> Good game though.'() {
         when:
-        Command command = parser.parse('Alice ->')
+        Command command = parser.parse('Bob -> Good game though.')
 
         then:
-        command.user == 'Alice'
+        command.user == 'Bob'
     }
 
-    def 'should detect function is posting when input is: Alice ->'() {
+    def 'should detect function is posting when input is: Bob -> Good game though.'() {
         when:
-        Command command = parser.parse('Alice ->')
+        Command command = parser.parse('Bob -> Good game though.')
 
         then:
         command.function == Function.POST
     }
 
-    def 'should detect user is Charlie when input is: Charlie follows Alice'() {
+    def 'should detect user is Charlie when input is: Charlie follows Bob'() {
         when:
-        Command command = parser.parse('Charlie follows Alice')
+        Command command = parser.parse('Charlie follows Bob')
 
         then:
         command.user == 'Charlie'
     }
 
-    def 'should detect function is following when input is: Charlie follows Alice'() {
+    def 'should detect function is following when input is: Charlie follows Bob'() {
         when:
-        Command command = parser.parse('Charlie follows Alice')
+        Command command = parser.parse('Charlie follows Bob')
 
         then:
         command.function == Function.FOLLOW
     }
 
-    def 'should detect Alice is the followee when input is: Charlie follows Alice'() {
+    def 'should detect Bob is the followee when input is: Charlie follows Bob'() {
         when:
-        Command command = parser.parse('Charlie follows Alice')
+        Command command = parser.parse('Charlie follows Bob')
 
         then:
-        command.payload == 'Alice'
+        command.payload == 'Bob'
     }
 }
