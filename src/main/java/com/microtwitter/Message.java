@@ -1,4 +1,4 @@
-package twitter;
+package com.microtwitter;
 
 public class Message {
     public final String text;

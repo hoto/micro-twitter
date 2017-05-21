@@ -1,4 +1,4 @@
-package twitter.io
+package com.microtwitter.io
 
 import spock.lang.Specification
 import spock.lang.Unroll

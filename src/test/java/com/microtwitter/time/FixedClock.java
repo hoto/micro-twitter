@@ -1,4 +1,4 @@
-package twitter.time;
+package com.microtwitter.time;
 
 public class FixedClock extends Clock {
     private long timestamp;

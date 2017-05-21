@@ -1,4 +1,4 @@
-package twitter.io;
+package com.microtwitter.io;
 
 public enum Intent {
     POST("->"),

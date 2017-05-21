@@ -1,4 +1,4 @@
-package twitter.io;
+package com.microtwitter.io;
 
 public class Command {
     public final String user;

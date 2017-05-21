@@ -1,4 +1,4 @@
-package twitter
+package com.microtwitter
 
 import spock.lang.Specification
 

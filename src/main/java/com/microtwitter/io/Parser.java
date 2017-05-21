@@ -1,4 +1,4 @@
-package twitter.io;
+package com.microtwitter.io;
 
 import java.util.Arrays;
 import java.util.List;

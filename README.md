@@ -23,5 +23,5 @@ A console-based micro scale twitter in Java.
     ./gradlew run
     
 or
-
-    java -classpath ./build/libs/micro-twitter.jar twitter.App
+    ./gradlew jar
+    java -classpath ./build/libs/micro-twitter.jar com.microtwitter.App

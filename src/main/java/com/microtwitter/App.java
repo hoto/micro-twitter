@@ -1,4 +1,4 @@
-package twitter;
+package com.microtwitter;
 
 public class App {
     public static void main(String[] args) {

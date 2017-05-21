@@ -1,4 +1,4 @@
-package twitter;
+package com.microtwitter;
 
 public class Help {
     public String getHelp() {
