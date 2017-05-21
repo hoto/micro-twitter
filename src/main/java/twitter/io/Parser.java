@@ -6,7 +6,7 @@ import java.util.List;
 public class Parser {
     private final String DELIMITER = " ";
     private final int USER = 0;
-    private final int FUNCTION = 1;
+    private final int INTENT = 1;
     private final int PAYLOAD = 2;
     private final String EMPTY_PAYLOAD = "";
 
@@ -20,12 +20,12 @@ public class Parser {
             return wallCommand(user);
         }
         if (hasPayload(tokens)) {
-            String function = tokens[FUNCTION];
+            String intent = tokens[INTENT];
             String payload = getPayload(tokens);
-            if (isPost(function)) {
+            if (isPost(intent)) {
                 return postCommand(user, payload);
             }
-            if (isFollow(function)) {
+            if (isFollow(intent)) {
                 return followCommand(user, payload);
             }
         }
@@ -49,16 +49,16 @@ public class Parser {
         return String.join(DELIMITER, payloadList);
     }
 
-    private boolean isFollow(String function) {
-        return Intent.FOLLOW.inNaturalLanguage.equals(function);
+    private boolean isFollow(String intent) {
+        return Intent.FOLLOW.inNaturalLanguage.equals(intent);
     }
 
     private Command postCommand(String user, String payload) {
         return new Command(user, Intent.POST, payload);
     }
 
-    private boolean isPost(String function) {
-        return Intent.POST.inNaturalLanguage.equals(function);
+    private boolean isPost(String intent) {
+        return Intent.POST.inNaturalLanguage.equals(intent);
     }
 
     private Command followCommand(String user, String payload) {
