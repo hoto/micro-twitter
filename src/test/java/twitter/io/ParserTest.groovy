@@ -11,24 +11,24 @@ class ParserTest extends Specification {
     }
 
     @Unroll
-    def 'should detect user, function and payload from all valid commands'() {
+    def 'should detect user, intent and payload from all valid commands'() {
         given:
-        Command command = parser.parse(input)
+        Command command = parser.parse(rawCommand)
 
         expect:
         command.user == user
-        command.function == function
+        command.intent == function
         command.payload == payload
 
         where:
-        input                      | user      | function        | payload
-        'Bob'                      | 'Bob'     | Function.READ   | ''
-        'Bob -> Good game though.' | 'Bob'     | Function.POST   | 'Good game though.'
-        'Charlie follows Bob'      | 'Charlie' | Function.FOLLOW | 'Bob'
-        'Charlie wall'             | 'Charlie' | Function.WALL   | ''
+        rawCommand                 | user      | function      | payload
+        'Bob'                      | 'Bob'     | Intent.READ   | ''
+        'Bob -> Good game though.' | 'Bob'     | Intent.POST   | 'Good game though.'
+        'Charlie follows Bob'      | 'Charlie' | Intent.FOLLOW | 'Bob'
+        'Charlie wall'             | 'Charlie' | Intent.WALL   | ''
     }
 
-    def 'should detect user is Bob when input is: Bob'() {
+    def 'should detect user is Bob when command is: Bob'() {
         when:
         Command command = parser.parse('Bob')
 
@@ -36,15 +36,15 @@ class ParserTest extends Specification {
         command.user == 'Bob'
     }
 
-    def 'should detect function is reading when input is: Bob'() {
+    def 'should detect intent is reading when command is: Bob'() {
         when:
         Command command = parser.parse('Bob')
 
         then:
-        command.function == Function.READ
+        command.intent == Intent.READ
     }
 
-    def 'should detect user is Bob when input is: Bob -> Good game though.'() {
+    def 'should detect user is Bob when command is: Bob -> Good game though.'() {
         when:
         Command command = parser.parse('Bob -> Good game though.')
 
@@ -52,15 +52,15 @@ class ParserTest extends Specification {
         command.user == 'Bob'
     }
 
-    def 'should detect function is posting when input is: Bob -> Good game though.'() {
+    def 'should detect intent is posting when command is: Bob -> Good game though.'() {
         when:
         Command command = parser.parse('Bob -> Good game though.')
 
         then:
-        command.function == Function.POST
+        command.intent == Intent.POST
     }
 
-    def 'should detect user is Charlie when input is: Charlie follows Bob'() {
+    def 'should detect user is Charlie when command is: Charlie follows Bob'() {
         when:
         Command command = parser.parse('Charlie follows Bob')
 
@@ -68,15 +68,15 @@ class ParserTest extends Specification {
         command.user == 'Charlie'
     }
 
-    def 'should detect function is following when input is: Charlie follows Bob'() {
+    def 'should detect intent is to follow when command is: Charlie follows Bob'() {
         when:
         Command command = parser.parse('Charlie follows Bob')
 
         then:
-        command.function == Function.FOLLOW
+        command.intent == Intent.FOLLOW
     }
 
-    def 'should detect Bob is the followee when input is: Charlie follows Bob'() {
+    def 'should detect Bob is the followee when command is: Charlie follows Bob'() {
         when:
         Command command = parser.parse('Charlie follows Bob')
 
@@ -84,11 +84,11 @@ class ParserTest extends Specification {
         command.payload == 'Bob'
     }
 
-    def 'should detect function is wall when input is: Charlie wall'() {
+    def 'should detect intent is wall when command is: Charlie wall'() {
         when:
         Command command = parser.parse('Charlie wall')
 
         then:
-        command.function == Function.WALL
+        command.intent == Intent.WALL
     }
 }

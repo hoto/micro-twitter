@@ -2,12 +2,12 @@ package twitter.io;
 
 public class Command {
     public final String user;
-    public final Function function;
+    public final Intent intent;
     public final String payload;
 
-    Command(String user, Function function, String payload) {
+    Command(String user, Intent intent, String payload) {
         this.user = user;
-        this.function = function;
+        this.intent = intent;
         this.payload = payload;
     }
 }

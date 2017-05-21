@@ -1,6 +1,6 @@
 package twitter.io;
 
-public enum Function {
+public enum Intent {
     POST("->"),
     READ(""),
     FOLLOW("follows"),
@@ -8,7 +8,7 @@ public enum Function {
 
     public final String inNaturalLanguage;
 
-    Function(String inNaturalLanguage) {
+    Intent(String inNaturalLanguage) {
         this.inNaturalLanguage = inNaturalLanguage;
     }
 }

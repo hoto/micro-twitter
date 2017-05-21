@@ -37,7 +37,7 @@ public class Parser {
     }
 
     private Command wallCommand(String user) {
-        return new Command(user, Function.WALL, EMPTY_PAYLOAD);
+        return new Command(user, Intent.WALL, EMPTY_PAYLOAD);
     }
 
     private boolean hasPayload(String[] tokens) {
@@ -50,22 +50,22 @@ public class Parser {
     }
 
     private boolean isFollow(String function) {
-        return Function.FOLLOW.inNaturalLanguage.equals(function);
+        return Intent.FOLLOW.inNaturalLanguage.equals(function);
     }
 
     private Command postCommand(String user, String payload) {
-        return new Command(user, Function.POST, payload);
+        return new Command(user, Intent.POST, payload);
     }
 
     private boolean isPost(String function) {
-        return Function.POST.inNaturalLanguage.equals(function);
+        return Intent.POST.inNaturalLanguage.equals(function);
     }
 
     private Command followCommand(String user, String payload) {
-        return new Command(user, Function.FOLLOW, payload);
+        return new Command(user, Intent.FOLLOW, payload);
     }
 
     private Command readCommand(String user) {
-        return new Command(user, Function.READ, EMPTY_PAYLOAD);
+        return new Command(user, Intent.READ, EMPTY_PAYLOAD);
     }
 }
