@@ -8,8 +8,8 @@ import java.util.Map;
 import static java.util.Collections.singletonList;
 
 public class Timeline {
-    private Map<String, List<Message>> timeline = new HashMap<>();
     private Clock clock;
+    private Map<String, List<Message>> timeline = new HashMap<>();
 
     public Timeline(Clock clock) {
         this.clock = clock;
