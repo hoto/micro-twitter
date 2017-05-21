@@ -1,5 +1,6 @@
+package twitter
+
 import spock.lang.Specification
-import twitter.Help
 
 class HelpTest extends Specification {
     def 'should return help message when run'() {

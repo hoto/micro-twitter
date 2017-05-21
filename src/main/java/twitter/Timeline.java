@@ -9,6 +9,11 @@ import static java.util.Collections.singletonList;
 
 public class Timeline {
     private Map<String, List<Message>> timeline = new HashMap<>();
+    private Clock clock;
+
+    public Timeline(Clock clock) {
+        this.clock = clock;
+    }
 
     public List<Message> view(String user) {
         if (timeline.containsKey(user))
@@ -16,11 +21,11 @@ public class Timeline {
         return new ArrayList<>();
     }
 
-    public void post(String user, String message) {
-        Message msg = new Message(message, 123456);
+    public void post(String user, String text) {
+        Message message = new Message(text, clock.millis());
         if (timeline.containsKey(user))
-            timeline.get(user).add(msg);
+            timeline.get(user).add(message);
         else
-            timeline.put(user, new ArrayList<>(singletonList(msg)));
+            timeline.put(user, new ArrayList<>(singletonList(message)));
     }
 }

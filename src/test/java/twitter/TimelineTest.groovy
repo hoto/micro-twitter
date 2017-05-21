@@ -1,12 +1,14 @@
+package twitter
+
 import spock.lang.Specification
-import twitter.Message
-import twitter.Timeline
 
 class TimelineTest extends Specification {
     private Timeline timeline
+    private FixedClock clock
 
     def setup() {
-        timeline = new Timeline()
+        clock = new FixedClock()
+        timeline = new Timeline(clock)
     }
 
     def 'should have no messages when user has no messages'() {
@@ -86,6 +88,7 @@ class TimelineTest extends Specification {
 
     def 'should store timestamp with the message when user posts'() {
         given:
+        clock.setMillis(123456)
         timeline.post('Alice', 'I love the weather today.')
 
         when:
