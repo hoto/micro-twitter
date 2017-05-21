@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.singletonList;
+
 public class Timeline {
-    private Map<String, ArrayList<String>> timeline = new HashMap<>();
+    private Map<String, List<String>> timeline = new HashMap<>();
 
     public List<String> view(String user) {
         if (timeline.containsKey(user)) return timeline.get(user);
@@ -14,12 +16,9 @@ public class Timeline {
     }
 
     public void post(String user, String message) {
-        ArrayList<String> messages;
-        if (timeline.get(user) == null)
-            messages = new ArrayList<>();
+        if (timeline.containsKey(user))
+            timeline.get(user).add(message);
         else
-            messages = timeline.get(user);
-        messages.add(message);
-        timeline.put(user, messages);
+            timeline.put(user, new ArrayList<>(singletonList(message)));
     }
 }

@@ -27,6 +27,21 @@ class TimelineTest extends Specification {
         bobTimeline == ['I love the weather today.']
     }
 
+    def 'should store two messages when user posts same message twice'() {
+        given:
+        timeline.post('Alice', 'I love the weather today.')
+        timeline.post('Alice', 'I love the weather today.')
+
+        when:
+        List<String> aliceTimeline = timeline.view('Alice')
+
+        then:
+        aliceTimeline == [
+                'I love the weather today.',
+                'I love the weather today.'
+        ]
+    }
+
     def 'should store two messages when user posts two messages'() {
         given:
         timeline.post('Bob', 'Damn! We lost!')
