@@ -12,79 +12,79 @@ class MicroTwitterTest extends Specification {
         twitter = new MicroTwitter(clock)
     }
 
-    def 'should have no messages when user never posted'() {
+    def 'should return timeline with no messages when user never posted'() {
         when:
-        List<Message> aliceMessages = twitter.read('Alice')
+        List<Message> aliceTimeline = twitter.read('Alice')
 
         then:
-        aliceMessages == []
+        aliceTimeline == []
     }
 
-    def 'should have message when user posted a message'() {
+    def 'should return timeline with one message when user posted that message'() {
         given:
         twitter.post('Alice', 'I love the weather today')
 
         when:
-        List<Message> aliceMessages = twitter.read('Alice')
+        List<Message> aliceTimeline = twitter.read('Alice')
 
         then:
-        aliceMessages.get(0).text == 'I love the weather today'
+        aliceTimeline.get(0).text == 'I love the weather today'
     }
 
-    def 'should have two messages when user posted two different messages'() {
+    def 'should return timeline with two messages when user posted two different messages'() {
         given:
         twitter.post('Bob', 'Damn! We lost!')
         twitter.post('Bob', 'Good game though.')
 
         when:
-        List<Message> bobMessages = twitter.read('Bob')
+        List<Message> bobTimeline = twitter.read('Bob')
 
         then:
-        bobMessages.get(0).text == 'Damn! We lost!'
-        bobMessages.get(1).text == 'Good game though.'
+        bobTimeline.get(0).text == 'Damn! We lost!'
+        bobTimeline.get(1).text == 'Good game though.'
     }
 
-    def 'should have two messages when user posted same message twice'() {
+    def 'should return timeline with two messages when user posted same message twice'() {
         given:
         twitter.post('Alice', 'I love the weather today')
         twitter.post('Alice', 'I love the weather today')
 
         when:
-        List<Message> aliceMessages = twitter.read('Alice')
+        List<Message> aliceTimeline = twitter.read('Alice')
 
         then:
-        aliceMessages.get(0).text == 'I love the weather today'
-        aliceMessages.get(1).text == 'I love the weather today'
+        aliceTimeline.get(0).text == 'I love the weather today'
+        aliceTimeline.get(1).text == 'I love the weather today'
     }
 
-    def 'should have two messages when two users posted a message each'() {
+    def 'should return two timelines when two users posted a message'() {
         given:
         twitter.post('Alice', 'I love the weather today')
         twitter.post('Bob', 'Damn! We lost!')
 
         when:
-        List<Message> aliceMessages = twitter.read('Alice')
-        List<Message> bobMessages = twitter.read('Bob')
+        List<Message> aliceTimeline = twitter.read('Alice')
+        List<Message> bobTimeline = twitter.read('Bob')
 
         then:
-        aliceMessages.get(0).text == 'I love the weather today'
-        bobMessages.get(0).text == 'Damn! We lost!'
+        aliceTimeline.get(0).text == 'I love the weather today'
+        bobTimeline.get(0).text == 'Damn! We lost!'
     }
 
-    def 'should have three messages when two users posted three messages'() {
+    def 'should return two timelines when two users posted three messages'() {
         given:
         twitter.post('Alice', 'I love the weather today')
         twitter.post('Bob', 'Damn! We lost!')
         twitter.post('Bob', 'Good game though.')
 
         when:
-        List<Message> aliceMessages = twitter.read('Alice')
-        List<Message> bobMessages = twitter.read('Bob')
+        List<Message> aliceTimeline = twitter.read('Alice')
+        List<Message> bobTimeline = twitter.read('Bob')
 
         then:
-        aliceMessages.get(0).text == 'I love the weather today'
-        bobMessages.get(0).text == 'Damn! We lost!'
-        bobMessages.get(1).text == 'Good game though.'
+        aliceTimeline.get(0).text == 'I love the weather today'
+        bobTimeline.get(0).text == 'Damn! We lost!'
+        bobTimeline.get(1).text == 'Good game though.'
     }
 
     def 'should store timestamp with the message when user posted'() {
@@ -93,11 +93,11 @@ class MicroTwitterTest extends Specification {
         twitter.post('Alice', 'I love the weather today')
 
         when:
-        List<Message> aliceMessages = twitter.read('Alice')
+        List<Message> aliceTimeline = twitter.read('Alice')
 
         then:
-        aliceMessages.get(0).text == 'I love the weather today'
-        aliceMessages.get(0).timestamp == 1000
+        aliceTimeline.get(0).text == 'I love the weather today'
+        aliceTimeline.get(0).timestamp == 1000
     }
 
     def 'should store timestamps with the messages when three users posted consecutively'() {
@@ -111,18 +111,37 @@ class MicroTwitterTest extends Specification {
         twitter.post('Charlie', "I'm in New York today! Anyone want to have a coffee?")
 
         when:
-        List<Message> aliceMessages = twitter.read('Alice')
-        List<Message> bobMessages = twitter.read('Bob')
-        List<Message> charlieMessages = twitter.read('Charlie')
+        List<Message> aliceTimeline = twitter.read('Alice')
+        List<Message> bobTimeline = twitter.read('Bob')
+        List<Message> charlieTimeline = twitter.read('Charlie')
 
         then:
-        aliceMessages.get(0).text == 'I love the weather today'
-        aliceMessages.get(0).timestamp == 1000
-        bobMessages.get(0).text == 'Damn! We lost!'
-        bobMessages.get(0).timestamp == 1000
-        bobMessages.get(1).text == 'Good game though.'
-        bobMessages.get(1).timestamp == 2000
-        charlieMessages.get(0).text == "I'm in New York today! Anyone want to have a coffee?"
-        charlieMessages.get(0).timestamp == 3000
+        aliceTimeline.get(0).text == 'I love the weather today'
+        aliceTimeline.get(0).timestamp == 1000
+        bobTimeline.get(0).text == 'Damn! We lost!'
+        bobTimeline.get(0).timestamp == 1000
+        bobTimeline.get(1).text == 'Good game though.'
+        bobTimeline.get(1).timestamp == 2000
+        charlieTimeline.get(0).text == "I'm in New York today! Anyone want to have a coffee?"
+        charlieTimeline.get(0).timestamp == 3000
+    }
+
+    def 'should return empty wall when user has no messages and follows no one'() {
+        when:
+        List<Message> aliceWall = twitter.wall('Alice')
+
+        then:
+        aliceWall == []
+    }
+
+    def 'should return wall with user message when user posted that message'() {
+        given:
+        twitter.post('Alice', 'I love the weather today')
+
+        when:
+        List<Message> aliceWall = twitter.wall('Alice')
+
+        then:
+        aliceWall.get(0).text == 'I love the weather today'
     }
 }

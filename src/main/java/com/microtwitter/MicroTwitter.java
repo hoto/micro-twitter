@@ -30,4 +30,8 @@ public class MicroTwitter {
         else
             timelines.put(user, new ArrayList<>(singletonList(message)));
     }
+
+    public List<Message> wall(String user) {
+        return this.read(user);
+    }
 }
