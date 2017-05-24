@@ -1,14 +1,9 @@
 package com.microtwitter
 
-import spock.lang.Specification
 import com.microtwitter.time.FixedClock
+import spock.lang.Specification
 
 class UserTest extends Specification {
-    private FixedClock clock
-
-    def setup() {
-        clock = new FixedClock()
-    }
 
     def 'should return timeline with no messages when user never posted'() {
         given:
@@ -55,6 +50,7 @@ class UserTest extends Specification {
 
     def 'should store timestamp with the message when user posted'() {
         given:
+        FixedClock clock = new FixedClock()
         User alice = new User('Alice', clock)
 
         when:
@@ -68,6 +64,7 @@ class UserTest extends Specification {
 
     def 'should store accurate timestamps with the messages when user posted consecutively'() {
         given:
+        FixedClock clock = new FixedClock()
         User bob = new User('Bob', clock)
 
         when:
@@ -153,32 +150,32 @@ class UserTest extends Specification {
         charlie.wall().size() == 4
     }
 
-//    def 'should return user C wall with messages in chronological order when user C and his followees posted'() {
-//        given:
-//        clock.setMillis(1000)
-//        twitter.post('Bob', 'Damn! We lost!')
-//        clock.setMillis(2000)
-//        twitter.post('Alice', 'I love the weather today')
-//        clock.setMillis(3000)
-//        twitter.post('Bob', 'Good game though.')
-//        clock.setMillis(4000)
-//        twitter.post('Charlie', "I'm in New York today! Anyone want to have a coffee?")
-//
-//        and:
-//        twitter.follow('Charlie', 'Alice')
-//        twitter.follow('Charlie', 'Bob')
-//
-//        when:
-//        List<Message> charlieWall = twitter.wall('Charlie')
-//
-//        then:
-//        charlieWall.get(0).user == 'Bob'
-//        charlieWall.get(0).text == 'Damn! We lost!'
-//        charlieWall.get(1).user == 'Alice'
-//        charlieWall.get(1).text == 'I love the weather today'
-//        charlieWall.get(2).user == 'Bob'
-//        charlieWall.get(2).text == 'Good game though.'
-//        charlieWall.get(3).user == 'Charlie'
-//        charlieWall.get(3).text == "I'm in New York today! Anyone want to have a coffee?"
-//    }
+    def 'should return user C wall with messages in chronological order when user C and his followees posted'() {
+        given:
+        FixedClock clock = new FixedClock()
+        User alice = new User('Alice', clock)
+        User bob = new User('Bob', clock)
+        User charlie = new User('Charlie', clock)
+
+        when:
+        clock.setMillis(1000)
+        bob.post('Damn! We lost!')
+        clock.setMillis(2000)
+        alice.post('I love the weather today')
+        clock.setMillis(3000)
+        charlie.post("I'm in New York today! Anyone want to have a coffee?")
+        clock.setMillis(4000)
+        bob.post('Good game though.')
+
+        and:
+        charlie.follow(alice)
+        charlie.follow(bob)
+
+        then:
+        List<Message> charlieWall = charlie.wall()
+        charlieWall.get(0).text == 'Damn! We lost!'
+        charlieWall.get(1).text == 'I love the weather today'
+        charlieWall.get(2).text == "I'm in New York today! Anyone want to have a coffee?"
+        charlieWall.get(3).text == 'Good game though.'
+    }
 }

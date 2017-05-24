@@ -3,6 +3,7 @@ package com.microtwitter;
 import com.microtwitter.time.Clock;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,7 @@ public class User {
         List<Message> wall = new ArrayList<>();
         wall.addAll(messages);
         wall.addAll(getFolloweesMessages());
+        Collections.sort(wall);
         return wall;
     }
 
