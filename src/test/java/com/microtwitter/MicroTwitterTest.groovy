@@ -17,7 +17,7 @@ class MicroTwitterTest extends Specification {
         List<Message> aliceTimeline = twitter.read('Alice')
 
         then:
-        aliceTimeline == []
+        aliceTimeline.size() == 0
     }
 
     def 'should return timeline with one message when user posted that message'() {
@@ -28,7 +28,7 @@ class MicroTwitterTest extends Specification {
         List<Message> aliceTimeline = twitter.read('Alice')
 
         then:
-        aliceTimeline.get(0).text == 'I love the weather today'
+        aliceTimeline.size() == 1
     }
 
     def 'should return timeline with two messages when user posted two different messages'() {
@@ -40,8 +40,7 @@ class MicroTwitterTest extends Specification {
         List<Message> bobTimeline = twitter.read('Bob')
 
         then:
-        bobTimeline.get(0).text == 'Damn! We lost!'
-        bobTimeline.get(1).text == 'Good game though.'
+        bobTimeline.size() == 2
     }
 
     def 'should return timeline with two messages when user posted same message twice'() {
@@ -53,11 +52,10 @@ class MicroTwitterTest extends Specification {
         List<Message> aliceTimeline = twitter.read('Alice')
 
         then:
-        aliceTimeline.get(0).text == 'I love the weather today'
-        aliceTimeline.get(1).text == 'I love the weather today'
+        aliceTimeline.size() == 2
     }
 
-    def 'should return two timelines when two users posted a message'() {
+    def 'should return two different timelines when two users posted a message'() {
         given:
         twitter.post('Alice', 'I love the weather today')
         twitter.post('Bob', 'Damn! We lost!')
@@ -67,11 +65,11 @@ class MicroTwitterTest extends Specification {
         List<Message> bobTimeline = twitter.read('Bob')
 
         then:
-        aliceTimeline.get(0).text == 'I love the weather today'
-        bobTimeline.get(0).text == 'Damn! We lost!'
+        aliceTimeline.size() == 1
+        bobTimeline.size() == 1
     }
 
-    def 'should return two timelines when two users posted three messages'() {
+    def 'should return two different timelines when two users posted three messages'() {
         given:
         twitter.post('Alice', 'I love the weather today')
         twitter.post('Bob', 'Damn! We lost!')
@@ -82,9 +80,8 @@ class MicroTwitterTest extends Specification {
         List<Message> bobTimeline = twitter.read('Bob')
 
         then:
-        aliceTimeline.get(0).text == 'I love the weather today'
-        bobTimeline.get(0).text == 'Damn! We lost!'
-        bobTimeline.get(1).text == 'Good game though.'
+        aliceTimeline.size() == 1
+        bobTimeline.size() == 2
     }
 
     def 'should store timestamp with the message when user posted'() {
@@ -100,7 +97,7 @@ class MicroTwitterTest extends Specification {
         aliceTimeline.get(0).timestamp == 1000
     }
 
-    def 'should store timestamps with the messages when three users posted consecutively'() {
+    def 'should store accurate timestamps with the messages when three users posted consecutively'() {
         given:
         clock.setMillis(1000)
         twitter.post('Alice', 'I love the weather today')
@@ -131,10 +128,10 @@ class MicroTwitterTest extends Specification {
         List<Message> aliceWall = twitter.wall('Alice')
 
         then:
-        aliceWall == []
+        aliceWall.size() == 0
     }
 
-    def 'should return wall with user message when user posted that message'() {
+    def 'should return user A wall with one message when user A posted'() {
         given:
         twitter.post('Alice', 'I love the weather today')
 
@@ -142,6 +139,53 @@ class MicroTwitterTest extends Specification {
         List<Message> aliceWall = twitter.wall('Alice')
 
         then:
-        aliceWall.get(0).text == 'I love the weather today'
+        aliceWall.size() == 1
+    }
+
+    def 'should return user B wall with user A message when user A posted and user B follows user A'() {
+        given:
+        twitter.post('Alice', 'I love the weather today')
+
+        and:
+        twitter.follow('Bob', 'Alice')
+
+        when:
+        List<Message> bobWall = twitter.wall('Bob')
+
+        then:
+        bobWall.size() == 1
+    }
+
+    def 'should return user C wall with messages from user C and his followee when user C and his followee posted'() {
+        given:
+        twitter.post('Alice', 'I love the weather today')
+        twitter.post('Charlie', "I'm in New York today! Anyone want to have a coffee?")
+
+        and:
+        twitter.follow('Charlie', 'Alice')
+
+        when:
+        List<Message> charlieWall = twitter.wall('Charlie')
+
+        then:
+        charlieWall.size() == 2
+    }
+
+    def 'should return user C wall with messages from user C and his followees when user C and his followees posted'() {
+        given:
+        twitter.post('Alice', 'I love the weather today')
+        twitter.post('Bob', 'Damn! We lost!')
+        twitter.post('Bob', 'Good game though.')
+        twitter.post('Charlie', "I'm in New York today! Anyone want to have a coffee?")
+
+        and:
+        twitter.follow('Charlie', 'Alice')
+        twitter.follow('Charlie', 'Bob')
+
+        when:
+        List<Message> charlieWall = twitter.wall('Charlie')
+
+        then:
+        charlieWall.size() == 4
     }
 }
