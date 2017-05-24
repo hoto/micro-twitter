@@ -3,8 +3,6 @@ package com.microtwitter.io;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.microtwitter.io.Intent.*;
-
 public class Parser {
     private final String DELIMITER = " ";
     private final int USER_OFFSET = 0;
@@ -18,28 +16,21 @@ public class Parser {
     public Command parse(String command) {
         String[] tokens = command.split(DELIMITER);
         String user = tokens[USER_OFFSET];
-        if (isWallCommand(tokens)) {
-            return wallCommand(user);
-        }
-        if (hasPayload(tokens)) {
-            String intent = tokens[INTENT_OFFSET];
-            String payload = getPayload(tokens);
-            if (intent.equals(POST.inNaturalLanguage)) {
-                return postCommand(user, payload);
+        String intent = tokens.length > 1 ? tokens[INTENT_OFFSET] : "";
+        switch (intent) {
+            case "wall": {
+                return new Command(user, Intent.WALL, EMPTY_PAYLOAD);
             }
-            if (intent.equals(FOLLOW.inNaturalLanguage)) {
-                return followCommand(user, payload);
+            case "->": {
+                return new Command(user, Intent.POST, getPayload(tokens));
+            }
+            case "follows": {
+                return new Command(user, Intent.FOLLOW, getPayload(tokens));
+            }
+            default: {
+                return new Command(user, Intent.READ, EMPTY_PAYLOAD);
             }
         }
-        return readCommand(user);
-    }
-
-    private boolean isWallCommand(String[] tokens) {
-        return tokens.length == 2;
-    }
-
-    private boolean hasPayload(String[] tokens) {
-        return tokens.length > PAYLOAD_OFFSET;
     }
 
     private String getPayload(String[] tokens) {
@@ -47,19 +38,4 @@ public class Parser {
         return String.join(DELIMITER, payloadList);
     }
 
-    private Command wallCommand(String user) {
-        return new Command(user, Intent.WALL, EMPTY_PAYLOAD);
-    }
-
-    private Command postCommand(String user, String payload) {
-        return new Command(user, Intent.POST, payload);
-    }
-
-    private Command followCommand(String user, String payload) {
-        return new Command(user, Intent.FOLLOW, payload);
-    }
-
-    private Command readCommand(String user) {
-        return new Command(user, Intent.READ, EMPTY_PAYLOAD);
-    }
 }
