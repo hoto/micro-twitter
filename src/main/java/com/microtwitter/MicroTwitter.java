@@ -21,7 +21,7 @@ public class MicroTwitter {
 
     public void post(String user, String text) {
         Message message = new Message(text, clock.millis());
-        if (timelines.containsKey(user))
+        if (userHasMessages(user))
             timelines.get(user).add(message);
         else
             timelines.put(user, new ArrayList<>(singletonList(message)));
@@ -45,9 +45,13 @@ public class MicroTwitter {
     }
 
     public List<Message> read(String user) {
-        if (timelines.containsKey(user))
+        if (userHasMessages(user))
             return timelines.get(user);
         return new ArrayList<>();
+    }
+
+    private boolean userHasMessages(String user) {
+        return timelines.containsKey(user);
     }
 
     public void follow(String user, String followee) {
