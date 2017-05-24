@@ -3,13 +3,11 @@ package com.microtwitter
 import spock.lang.Specification
 import com.microtwitter.time.FixedClock
 
-class MicroTwitterTest extends Specification {
-    private MicroTwitter twitter
+class UserTest extends Specification {
     private FixedClock clock
 
     def setup() {
         clock = new FixedClock()
-        twitter = new MicroTwitter(clock)
     }
 
     def 'should return timeline with no messages when user never posted'() {
@@ -119,37 +117,40 @@ class MicroTwitterTest extends Specification {
         bob.wall().size() == 1
     }
 
-    def 'should return user C wall with messages from user C and his followee when user C and his followee posted'() {
+    def 'should return user B wall with messages from user B and his followee when user B and his followee posted'() {
         given:
-        twitter.post('Alice', 'I love the weather today')
-        twitter.post('Charlie', "I'm in New York today! Anyone want to have a coffee?")
-
-        and:
-        twitter.follow('Charlie', 'Alice')
+        User alice = new User('Alice')
+        User bob = new User('Bob')
 
         when:
-        List<Message> charlieWall = twitter.wall('Charlie')
+        alice.post('I love the weather today')
+        bob.post('Damn we lost!')
+
+        and:
+        bob.follow(alice)
 
         then:
-        charlieWall.size() == 2
+        bob.wall().size() == 2
     }
 
     def 'should return user C wall with messages from user C and his followees when user C and his followees posted'() {
         given:
-        twitter.post('Alice', 'I love the weather today')
-        twitter.post('Bob', 'Damn! We lost!')
-        twitter.post('Bob', 'Good game though.')
-        twitter.post('Charlie', "I'm in New York today! Anyone want to have a coffee?")
-
-        and:
-        twitter.follow('Charlie', 'Alice')
-        twitter.follow('Charlie', 'Bob')
+        User alice = new User('Alice')
+        User bob = new User('Bob')
+        User charlie = new User('Charlie')
 
         when:
-        List<Message> charlieWall = twitter.wall('Charlie')
+        alice.post('I love the weather today')
+        bob.post('Damn! We lost!')
+        bob.post('Good game though.')
+        charlie.post("I'm in New York today! Anyone want to have a coffee?")
+
+        and:
+        charlie.follow(alice)
+        charlie.follow(bob)
 
         then:
-        charlieWall.size() == 4
+        charlie.wall().size() == 4
     }
 
 //    def 'should return user C wall with messages in chronological order when user C and his followees posted'() {
