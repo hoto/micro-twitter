@@ -20,7 +20,7 @@ public class MicroTwitter {
     }
 
     public void post(String user, String text) {
-        Message message = new Message(text, clock.millis());
+        Message message = new Message(new User(""), text, clock.millis());
         if (userHasMessages(user))
             timelines.get(user).add(message);
         else
