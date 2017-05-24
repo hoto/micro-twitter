@@ -1,6 +1,7 @@
 package com.microtwitter;
 
 import com.microtwitter.time.Clock;
+import com.microtwitter.time.SystemClock;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,13 +10,13 @@ import java.util.stream.Collectors;
 
 public class User {
     private final String name;
-    private List<Message> messages = new ArrayList<>();
-    private List<User> followees = new ArrayList<>();
+    private final List<Message> messages = new ArrayList<>();
+    private final List<User> followees = new ArrayList<>();
     private final Clock clock;
 
     public User(String name) {
         this.name = name;
-        this.clock = new Clock();
+        this.clock = new SystemClock();
     }
 
     protected User(String name, Clock clock) {

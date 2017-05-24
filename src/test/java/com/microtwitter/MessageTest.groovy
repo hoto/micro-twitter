@@ -3,7 +3,7 @@ package com.microtwitter
 import spock.lang.Specification
 
 class MessageTest extends Specification {
-    def 'should messages be in chronological order when sorted'() {
+    def 'messages should be sortable by time'() {
         given:
         Message message1 = new Message(new User(''), '', 1000)
         Message message2 = new Message(new User(''), '', 2000)

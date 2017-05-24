@@ -13,5 +13,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'twitter.App'
+run {
+    standardInput = System.in
+}
+
+mainClassName = 'com.microtwitter.App'
 

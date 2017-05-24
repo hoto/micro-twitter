@@ -2,27 +2,25 @@
 
 A console-based micro scale twitter in Java.
 
-### Clean
+On windows use `gradlew.bat` instead of `./gradlew` to build.
 
-    ./gradlew clean
-    
-### Compile and test
+### Usage:
 
-    ./gradlew build
+    <user> -> <message>                Post a message as a user.
+    <user>                             Read user timeline.
+    <user> follows <another_user>      Follow another user.
+    <user> wall                        View aggregated list of all subscriptions.
+
+Example:
+
+Alice -> I love the weather today
+
 
 ### Test
 
     ./gradlew test
     
-### Build jar
-
-    ./gradlew jar
-
 ### Run
-
-    ./gradlew run
-    
-or
 
     ./gradlew jar
     java -classpath ./build/libs/micro-twitter.jar com.microtwitter.App

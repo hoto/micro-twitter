@@ -7,9 +7,9 @@ import static com.microtwitter.io.Intent.*;
 
 public class Parser {
     private final String DELIMITER = " ";
-    private final int USER = 0;
-    private final int INTENT = 1;
-    private final int PAYLOAD = 2;
+    private final int USER_OFFSET = 0;
+    private final int INTENT_OFFSET = 1;
+    private final int PAYLOAD_OFFSET = 2;
     private final String EMPTY_PAYLOAD = "";
 
     /**
@@ -17,12 +17,12 @@ public class Parser {
      */
     public Command parse(String command) {
         String[] tokens = command.split(DELIMITER);
-        String user = tokens[USER];
+        String user = tokens[USER_OFFSET];
         if (isWallCommand(tokens)) {
             return wallCommand(user);
         }
         if (hasPayload(tokens)) {
-            String intent = tokens[INTENT];
+            String intent = tokens[INTENT_OFFSET];
             String payload = getPayload(tokens);
             if (intent.equals(POST.inNaturalLanguage)) {
                 return postCommand(user, payload);
@@ -39,11 +39,11 @@ public class Parser {
     }
 
     private boolean hasPayload(String[] tokens) {
-        return tokens.length > PAYLOAD;
+        return tokens.length > PAYLOAD_OFFSET;
     }
 
     private String getPayload(String[] tokens) {
-        List<String> payloadList = Arrays.asList(tokens).subList(PAYLOAD, tokens.length);
+        List<String> payloadList = Arrays.asList(tokens).subList(PAYLOAD_OFFSET, tokens.length);
         return String.join(DELIMITER, payloadList);
     }
 

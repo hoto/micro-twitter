@@ -1,6 +1,6 @@
 package com.microtwitter.time;
 
-public class FixedClock extends Clock {
+public class FixedClock implements Clock {
     private long timestamp;
 
     @Override

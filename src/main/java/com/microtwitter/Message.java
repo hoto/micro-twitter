@@ -5,7 +5,7 @@ public class Message implements Comparable<Message> {
     public final String text;
     public final long timestamp;
 
-    Message(User user, String text, long timestamp) {
+    public Message(User user, String text, long timestamp) {
         this.user = user;
         this.text = text;
         this.timestamp = timestamp;
