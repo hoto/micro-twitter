@@ -1,5 +1,6 @@
 package com.microtwitter;
 
+import com.microtwitter.messages.Message;
 import com.microtwitter.time.Clock;
 import com.microtwitter.time.SystemClock;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class User {
-    private final String name;
+    public final String name;
     private final List<Message> messages = new ArrayList<>();
     private final List<User> followees = new ArrayList<>();
     private final Clock clock;
@@ -29,7 +30,7 @@ public class User {
     }
 
     public void post(String text) {
-        messages.add(new Message(this, text, clock.millis()));
+        messages.add(new Message(name, text, clock.millis()));
     }
 
     public List<Message> wall() {

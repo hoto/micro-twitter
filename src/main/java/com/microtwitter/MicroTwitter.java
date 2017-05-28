@@ -2,7 +2,8 @@ package com.microtwitter;
 
 import java.util.Scanner;
 
-public class App {
+public class MicroTwitter {
+
     public static void main(String[] args) {
         System.out.println("Enter command:");
 

@@ -1,12 +1,12 @@
-package com.microtwitter;
+package com.microtwitter.messages;
 
 public class Message implements Comparable<Message> {
-    public final User user;
+    public final String userName;
     public final String text;
     public final long timestamp;
 
-    public Message(User user, String text, long timestamp) {
-        this.user = user;
+    public Message(String userName, String text, long timestamp) {
+        this.userName = userName;
         this.text = text;
         this.timestamp = timestamp;
     }

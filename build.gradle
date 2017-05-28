@@ -17,5 +17,5 @@ run {
     standardInput = System.in
 }
 
-mainClassName = 'com.microtwitter.App'
+mainClassName = 'com.microtwitter.MicroTwitter'
 

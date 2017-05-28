@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
-    private final String DELIMITER = " ";
-    private final int USER_OFFSET = 0;
-    private final int INTENT_OFFSET = 1;
-    private final int PAYLOAD_OFFSET = 2;
-    private final String EMPTY_PAYLOAD = "";
+    private static final String DELIMITER = " ";
+    private static final int USER_OFFSET = 0;
+    private static final int INTENT_OFFSET = 1;
+    private static final int PAYLOAD_OFFSET = 2;
+    private static final String EMPTY_PAYLOAD = "";
 
     /**
      * Parses a command from natural language to a broken down structure.

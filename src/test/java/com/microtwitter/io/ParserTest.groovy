@@ -21,11 +21,11 @@ class ParserTest extends Specification {
         command.payload == payload
 
         where:
-        rawCommand                 | user      | function      | payload
-        'Bob'                      | 'Bob'     | Intent.READ   | ''
-        'Bob -> Good game though.' | 'Bob'     | Intent.POST   | 'Good game though.'
-        'Charlie follows Bob'      | 'Charlie' | Intent.FOLLOW | 'Bob'
-        'Charlie wall'             | 'Charlie' | Intent.WALL   | ''
+        rawCommand                 || user      | function      | payload
+        'Bob'                      || 'Bob'     | Intent.READ   | ''
+        'Bob -> Good game though.' || 'Bob'     | Intent.POST   | 'Good game though.'
+        'Charlie follows Bob'      || 'Charlie' | Intent.FOLLOW | 'Bob'
+        'Charlie wall'             || 'Charlie' | Intent.WALL   | ''
     }
 
     def 'should detect user is Bob when command is: Bob'() {

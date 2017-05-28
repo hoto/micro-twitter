@@ -13,7 +13,11 @@ On windows use `gradlew.bat` instead of `./gradlew` to build.
 
 Example:
 
-Alice -> I love the weather today
+    Alice -> I love the weather today
+    Alice
+    Bob -> I'm in New York today!
+    Bob follows Alice
+    Bob wall
 
 
 ### Test
@@ -23,4 +27,4 @@ Alice -> I love the weather today
 ### Run
 
     ./gradlew jar
-    java -classpath ./build/libs/micro-twitter.jar com.microtwitter.App
+    java -classpath ./build/libs/micro-twitter.jar com.microtwitter.MicroTwitter

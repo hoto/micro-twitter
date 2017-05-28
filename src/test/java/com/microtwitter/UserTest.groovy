@@ -1,5 +1,6 @@
 package com.microtwitter
 
+import com.microtwitter.messages.Message
 import com.microtwitter.time.FixedClock
 import spock.lang.Specification
 
