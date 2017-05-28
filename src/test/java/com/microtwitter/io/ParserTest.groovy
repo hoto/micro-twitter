@@ -17,11 +17,11 @@ class ParserTest extends Specification {
 
         expect:
         command.user == user
-        command.intent == function
+        command.intent == intent
         command.payload == payload
 
         where:
-        rawCommand                 || user      | function      | payload
+        rawCommand                 || user      | intent        | payload
         'Bob'                      || 'Bob'     | Intent.READ   | ''
         'Bob -> Good game though.' || 'Bob'     | Intent.POST   | 'Good game though.'
         'Charlie follows Bob'      || 'Charlie' | Intent.FOLLOW | 'Bob'

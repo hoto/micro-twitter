@@ -1,4 +1,4 @@
-package com.microtwitter;
+package com.microtwitter.users;
 
 import com.microtwitter.messages.Message;
 import com.microtwitter.time.Clock;

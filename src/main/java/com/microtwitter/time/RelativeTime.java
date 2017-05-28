@@ -28,5 +28,3 @@ public class RelativeTime {
         return amount == 1 ? String.format("%d %s ago", amount, unit) : String.format("%d %ss ago", amount, unit);
     }
 }
-
-
