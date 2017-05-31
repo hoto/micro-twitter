@@ -11,7 +11,7 @@ public class CommandFactory {
             case "follows":
                 return new FollowCommand(new User(userName), new User(userName));
             case "->":
-                return new PostCommand();
+                return new PostCommand(new User(userName), payload);
             default:
                 return new ReadCommand(new User(userName));
         }
