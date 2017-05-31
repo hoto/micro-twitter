@@ -2,9 +2,10 @@ package com.microtwitter.presenters;
 
 import com.microtwitter.messages.Message;
 
-public class JustTextMessagePresenter implements MessagePresenter {
+public class PlainMessagePresenter implements MessagePresenter {
+
     @Override
     public String present(Message message) {
-        return null;
+        return message.userName + " - " + message.text;
     }
 }
