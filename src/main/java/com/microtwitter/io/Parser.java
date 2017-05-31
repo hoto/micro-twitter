@@ -11,9 +11,13 @@ public class Parser {
     private static final int INTENT_OFFSET = 1;
     private static final int PAYLOAD_OFFSET = 2;
 
-    private final CommandFactory commandFactory = new CommandFactory();
+    private final CommandFactory commandFactory;
 
-    public Command parse2(String input) {
+    public Parser(CommandFactory commandFactory) {
+        this.commandFactory = commandFactory;
+    }
+
+    public Command parse(String input) {
         String[] tokens = input.split(DELIMITER);
         String user = tokens[USER_OFFSET];
         String intent = tokens.length > 1 ? tokens[INTENT_OFFSET] : "";
