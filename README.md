@@ -11,11 +11,14 @@ A console-based micro twitter in Java.
 
 Example:
 
-    Alice -> I love the weather today
-    Alice
-    Bob -> I'm in New York today!
-    Bob follows Alice
-    Bob wall
+    $ Alice -> I love the weather today
+    $ Alice
+    Alice - I love the weather today (3 seconds ago)
+    $ Bob -> I'm in New York today!
+    $ Bob follows Alice
+    $ Bob wall
+    Bob - I'm in New York today! (4 seconds ago)
+    Alice - I love the weather today (19 seconds ago)
 
     
 ### Run
@@ -23,9 +26,9 @@ Example:
 On windows use `gradlew.bat` instead of `./gradlew` to build.
 You can also install gradle globally and then run just `gradle` and ignore `gradlew` script.
 
-    ./gradlew jar
+    ./gradlew clean jar
     java -classpath ./build/libs/micro-twitter.jar com.microtwitter.MicroTwitter
     
 ### Test
 
-    ./gradlew test
+    ./gradlew clean test
