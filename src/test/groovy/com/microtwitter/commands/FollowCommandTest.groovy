@@ -8,7 +8,7 @@ class FollowCommandTest extends Specification {
     def 'should print user message when executed'() {
         given:
         User user = Mock(User)
-        User folowee = new User('Bob')
+        User folowee = Mock(User)
         FollowCommand command = new FollowCommand(user, folowee)
         PrintStream out = Mock(PrintStream)
 

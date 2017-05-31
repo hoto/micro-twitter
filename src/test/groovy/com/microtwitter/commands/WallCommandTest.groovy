@@ -2,6 +2,7 @@ package com.microtwitter.commands
 
 import com.microtwitter.presenters.PlainMessagePresenter
 import com.microtwitter.presenters.MessagePresenter
+import com.microtwitter.time.Clock
 import com.microtwitter.users.User
 import spock.lang.Specification
 
@@ -14,8 +15,8 @@ class WallCommandTest extends Specification {
 
     def setup() {
         presenter = new PlainMessagePresenter()
-        alice = new User('Alice')
-        bob = new User('Bob')
+        alice = new User('Alice', Mock(Clock))
+        bob = new User('Bob', Mock(Clock))
         command = new WallCommand(alice, presenter)
         out = Mock(PrintStream)
     }

@@ -2,6 +2,7 @@ package com.microtwitter.commands
 
 import com.microtwitter.presenters.MessagePresenter
 import com.microtwitter.presenters.PlainMessagePresenter
+import com.microtwitter.time.Clock
 import com.microtwitter.users.User
 import spock.lang.Specification
 
@@ -12,7 +13,7 @@ class ReadCommandTest extends Specification {
     private PrintStream out
 
     def setup() {
-        alice = new User('Alice')
+        alice = new User('Alice', Mock(Clock))
         presenter = new PlainMessagePresenter()
         command = new ReadCommand(alice, presenter)
         out = Mock(PrintStream)

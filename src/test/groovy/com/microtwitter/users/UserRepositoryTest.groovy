@@ -1,12 +1,13 @@
 package com.microtwitter.users
 
+import com.microtwitter.time.Clock
 import spock.lang.Specification
 
 class UserRepositoryTest extends Specification {
     private UserRepository userRepository
 
     def setup() {
-        userRepository = new UserRepository();
+        userRepository = new UserRepository(Mock(Clock))
     }
 
     def 'should return user with no name when user name is empty'() {

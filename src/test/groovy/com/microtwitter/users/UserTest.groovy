@@ -5,19 +5,24 @@ import com.microtwitter.time.FixedClock
 import spock.lang.Specification
 
 class UserTest extends Specification {
+    private User alice
+    private User bob
+    private FixedClock clock
+    private User charlie
+
+    def setup() {
+        clock = new FixedClock()
+        alice = new User('Alice', clock)
+        bob = new User('Bob', clock)
+        charlie = new User('Charlie', clock)
+    }
 
     def 'should return timeline with no messages when user never posted'() {
-        given:
-        User alice = new User('Alice')
-
         expect:
         alice.timeline().size() == 0
     }
 
     def 'should return timeline with one message when user posted a message'() {
-        given:
-        User alice = new User('Alice')
-
         when:
         alice.post('I love the weather today')
 
@@ -26,9 +31,6 @@ class UserTest extends Specification {
     }
 
     def 'should return timeline with two messages when user posted two different messages'() {
-        given:
-        User bob = new User('Bob')
-
         when:
         bob.post('Damn! We lost!')
         bob.post('Good game though.')
@@ -38,9 +40,6 @@ class UserTest extends Specification {
     }
 
     def 'should return timeline with two messages when user posted same message twice'() {
-        given:
-        User alice = new User('Alice')
-
         when:
         alice.post('I love the weather today')
         alice.post('I love the weather today')
@@ -50,10 +49,6 @@ class UserTest extends Specification {
     }
 
     def 'should store timestamp with the message when user posted'() {
-        given:
-        FixedClock clock = new FixedClock()
-        User alice = new User('Alice', clock)
-
         when:
         clock.setMillis(1000)
         alice.post('I love the weather today')
@@ -64,10 +59,6 @@ class UserTest extends Specification {
     }
 
     def 'should store accurate timestamps with the messages when user posted consecutively'() {
-        given:
-        FixedClock clock = new FixedClock()
-        User bob = new User('Bob', clock)
-
         when:
         clock.setMillis(1000)
         bob.post('Damn! We lost!')
@@ -82,17 +73,11 @@ class UserTest extends Specification {
     }
 
     def 'should return empty wall when user has no messages and follows no one'() {
-        given:
-        User alice = new User('Alice')
-
         expect:
         alice.wall().size() == 0
     }
 
     def 'should return wall with one message when user posted'() {
-        given:
-        User alice = new User('Alice')
-
         when:
         alice.post('I love the weather today')
 
@@ -101,10 +86,6 @@ class UserTest extends Specification {
     }
 
     def 'should return user B wall with user A message when user A posted and user B follows user A'() {
-        given:
-        User bob = new User('Bob')
-        User alice = new User('Alice')
-
         when:
         alice.post('I love the weather today')
 
@@ -116,10 +97,6 @@ class UserTest extends Specification {
     }
 
     def 'should return user B wall with messages from user B and his followee when user B and his followee posted'() {
-        given:
-        User alice = new User('Alice')
-        User bob = new User('Bob')
-
         when:
         alice.post('I love the weather today')
         bob.post('Damn we lost!')
@@ -132,11 +109,6 @@ class UserTest extends Specification {
     }
 
     def 'should return user C wall with messages from user C and his followees when user C and his followees posted'() {
-        given:
-        User alice = new User('Alice')
-        User bob = new User('Bob')
-        User charlie = new User('Charlie')
-
         when:
         alice.post('I love the weather today')
         bob.post('Damn! We lost!')
@@ -152,12 +124,6 @@ class UserTest extends Specification {
     }
 
     def 'should return user C wall with messages in chronological order when user C and his followees posted'() {
-        given:
-        FixedClock clock = new FixedClock()
-        User alice = new User('Alice', clock)
-        User bob = new User('Bob', clock)
-        User charlie = new User('Charlie', clock)
-
         when:
         clock.setMillis(1000)
         bob.post('Damn! We lost!')
