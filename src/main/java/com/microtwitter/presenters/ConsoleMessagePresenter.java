@@ -4,7 +4,7 @@ import com.microtwitter.messages.Message;
 import com.microtwitter.time.Clock;
 import com.microtwitter.time.RelativeTime;
 
-public class ConsoleMessagePresenter {
+public class ConsoleMessagePresenter implements MessagePresenter {
     private final Clock clock;
     private final RelativeTime relativeTime = new RelativeTime();
 

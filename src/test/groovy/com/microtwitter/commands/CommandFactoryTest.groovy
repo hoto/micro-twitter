@@ -1,12 +1,14 @@
-package com.microtwitter.commands;
+package com.microtwitter.commands
 
-import spock.lang.Specification;
+import com.microtwitter.presenters.MessagePresenter
+import com.microtwitter.users.UserRepository
+import spock.lang.Specification
 
 class CommandFactoryTest extends Specification {
     private CommandFactory commandFactory
 
     def setup() {
-        commandFactory = new CommandFactory()
+        commandFactory = new CommandFactory(new UserRepository(), Mock(MessagePresenter))
     }
 
     def 'should return read command'() {

@@ -1,15 +1,15 @@
 package com.microtwitter.commands;
 
-import com.microtwitter.presenters.ConsoleMessagePresenter;
+import com.microtwitter.presenters.MessagePresenter;
 import com.microtwitter.users.User;
 
 import java.io.PrintStream;
 
 public class WallCommand implements Command {
     private final User user;
-    private final ConsoleMessagePresenter presenter;
+    private final MessagePresenter presenter;
 
-    public WallCommand(User user, ConsoleMessagePresenter presenter) {
+    public WallCommand(User user, MessagePresenter presenter) {
         this.user = user;
         this.presenter = presenter;
     }

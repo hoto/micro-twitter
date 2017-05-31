@@ -1,6 +1,7 @@
 package com.microtwitter.commands
 
 import com.microtwitter.presenters.ConsoleMessagePresenter
+import com.microtwitter.presenters.MessagePresenter
 import com.microtwitter.time.FixedClock
 import com.microtwitter.users.User
 import spock.lang.Specification
@@ -9,7 +10,7 @@ import static java.util.concurrent.TimeUnit.SECONDS
 
 class WallCommandTest extends Specification {
     private FixedClock clock
-    private ConsoleMessagePresenter presenter
+    private MessagePresenter presenter
     private User alice
     private User bob
     private WallCommand command
