@@ -96,6 +96,17 @@ class UserTest extends Specification {
         bob.wall().size() == 1
     }
 
+    def 'should not be able to follow itself'() {
+        when:
+        alice.post('I love the weather today')
+
+        and:
+        alice.follow(alice)
+
+        then:
+        alice.wall().size() == 1
+    }
+
     def 'should return user B wall with messages from user B and his followee when user B and his followee posted'() {
         when:
         alice.post('I love the weather today')
@@ -140,9 +151,9 @@ class UserTest extends Specification {
 
         then:
         List<Message> charlieWall = charlie.wall()
-        charlieWall.get(0).text == 'Damn! We lost!'
-        charlieWall.get(1).text == 'I love the weather today'
-        charlieWall.get(2).text == "I'm in New York today! Anyone want to have a coffee?"
-        charlieWall.get(3).text == 'Good game though.'
+        charlieWall.get(0).text == 'Good game though.'
+        charlieWall.get(1).text == "I'm in New York today! Anyone want to have a coffee?"
+        charlieWall.get(2).text == 'I love the weather today'
+        charlieWall.get(3).text == 'Damn! We lost!'
     }
 }

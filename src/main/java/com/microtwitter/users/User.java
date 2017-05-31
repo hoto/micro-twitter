@@ -44,6 +44,7 @@ public class User {
     }
 
     public void follow(User user) {
+        if (name.equals(user.name)) return;
         followees.add(user);
     }
 }

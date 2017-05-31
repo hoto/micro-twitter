@@ -13,6 +13,6 @@ public class Message implements Comparable<Message> {
 
     @Override
     public int compareTo(Message anotherMessage) {
-        return this.timestamp >= anotherMessage.timestamp ? 1 : -1;
+        return this.timestamp >= anotherMessage.timestamp ? -1 : 1;
     }
 }

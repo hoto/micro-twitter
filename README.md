@@ -8,18 +8,19 @@ A console-based micro twitter in Java.
     <user>                             Read user timeline.
     <user> follows <another_user>      Follow another user.
     <user> wall                        View aggregated list of all subscriptions.
+    exit                               Exit the application.
 
 Example:
 
-    $ Alice -> I love the weather today
-    $ Alice
+    > Alice -> I love the weather today
+    > Alice
     Alice - I love the weather today (3 seconds ago)
-    $ Bob -> I'm in New York today!
-    $ Bob follows Alice
-    $ Bob wall
-    Bob - I'm in New York today! (4 seconds ago)
-    Alice - I love the weather today (19 seconds ago)
-
+    > Bob -> I'm in New York today!
+    > Bob follows Alice
+    > Bob wall
+    Bob - I'm in New York today! (8 seconds ago)
+    Alice - I love the weather today (17 seconds ago)
+    > exit
     
 ### Run
 

@@ -18,8 +18,10 @@ public class CommandFactory {
         switch (intent) {
             case "wall":
                 return new WallCommand(user, presenter);
-            case "follows":
-                return new FollowCommand(user, user);
+            case "follows": {
+                User folowee = userRepository.getOrCreate(payload);
+                return new FollowCommand(user, folowee);
+            }
             case "->":
                 return new PostCommand(user, payload);
             default:

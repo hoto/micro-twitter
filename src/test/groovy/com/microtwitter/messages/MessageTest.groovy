@@ -17,9 +17,9 @@ class MessageTest extends Specification {
         Collections.sort(messages)
 
         then:
-        messages.get(0).timestamp == 1000
-        messages.get(1).timestamp == 2000
-        messages.get(2).timestamp == 3000
-        messages.get(3).timestamp == 4000
+        messages.get(0).timestamp == 4000
+        messages.get(1).timestamp == 3000
+        messages.get(2).timestamp == 2000
+        messages.get(3).timestamp == 1000
     }
 }
