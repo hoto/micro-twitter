@@ -20,7 +20,7 @@ public class User {
         this.clock = new SystemClock();
     }
 
-    protected User(String name, Clock clock) {
+    public User(String name, Clock clock) {
         this.name = name;
         this.clock = clock;
     }
@@ -43,10 +43,10 @@ public class User {
 
     private List<Message> getFolloweesMessages() {
         return followees
-                .stream()
-                .map(User::timeline)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
+            .stream()
+            .map(User::timeline)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
     }
 
     public void follow(User user) {

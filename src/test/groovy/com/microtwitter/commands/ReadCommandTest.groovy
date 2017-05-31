@@ -1,5 +1,6 @@
 package com.microtwitter.commands
 
+import com.microtwitter.presenters.ConsoleMessagePresenter
 import com.microtwitter.time.FixedClock
 import com.microtwitter.users.User
 import spock.lang.Specification
@@ -9,13 +10,15 @@ import static java.util.concurrent.TimeUnit.MINUTES
 class ReadCommandTest extends Specification {
     private FixedClock clock
     private User alice
+    private ConsoleMessagePresenter presenter
     private ReadCommand command
     private PrintStream out
 
     def setup() {
         clock = new FixedClock()
         alice = new User('Alice', clock)
-        command = new ReadCommand(alice, clock)
+        presenter = new ConsoleMessagePresenter(clock)
+        command = new ReadCommand(alice, presenter)
         out = Mock(PrintStream)
     }
 

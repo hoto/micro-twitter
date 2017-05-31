@@ -7,16 +7,19 @@ import com.microtwitter.users.User;
 public class CommandFactory {
 
     public Command create(String userName, String intent, String payload) {
+        //TODO: clean this up
+        SystemClock clock = new SystemClock();
+        ConsoleMessagePresenter presenter = new ConsoleMessagePresenter(clock);
+        User user = new User(userName);
         switch (intent) {
             case "wall":
-                return new WallCommand(new User(userName),
-                    new ConsoleMessagePresenter(new SystemClock()));
+                return new WallCommand(user, presenter);
             case "follows":
-                return new FollowCommand(new User(userName), new User(userName));
+                return new FollowCommand(user, user);
             case "->":
-                return new PostCommand(new User(userName), payload);
+                return new PostCommand(user, payload);
             default:
-                return new ReadCommand(new User(userName));
+                return new ReadCommand(user, presenter);
         }
     }
 }

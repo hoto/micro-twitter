@@ -6,7 +6,7 @@ import com.microtwitter.users.User;
 import java.io.PrintStream;
 
 public class WallCommand implements Command {
-    private User user;
+    private final User user;
     private final ConsoleMessagePresenter presenter;
 
     public WallCommand(User user, ConsoleMessagePresenter presenter) {

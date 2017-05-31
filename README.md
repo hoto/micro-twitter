@@ -1,8 +1,6 @@
 # Micro Twitter
 
-A console-based micro scale twitter in Java.
-
-On windows use `gradlew.bat` instead of `./gradlew` to build.
+A console-based micro twitter in Java.
 
 ### Usage:
 
@@ -19,12 +17,15 @@ Example:
     Bob follows Alice
     Bob wall
 
-
-### Test
-
-    ./gradlew test
     
 ### Run
 
+On windows use `gradlew.bat` instead of `./gradlew` to build.
+You can also install gradle globally and then run just `gradle` and ignore `gradlew` script.
+
     ./gradlew jar
     java -classpath ./build/libs/micro-twitter.jar com.microtwitter.MicroTwitter
+    
+### Test
+
+    ./gradlew test
