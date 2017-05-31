@@ -1,5 +1,7 @@
 package com.microtwitter.commands;
 
+import com.microtwitter.users.User;
+
 public class CommandFactory {
 
     public Command create(String user, String intent, String payload) {
@@ -11,7 +13,7 @@ public class CommandFactory {
             case "->":
                 return new PostCommand();
             default:
-                return new ReadCommand();
+                return new ReadCommand(new User(user));
         }
     }
 }
