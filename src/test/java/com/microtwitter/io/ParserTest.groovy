@@ -1,7 +1,10 @@
 package com.microtwitter.io
 
+import com.microtwitter.commands.FollowCommand
+import com.microtwitter.commands.PostCommand
+import com.microtwitter.commands.ReadCommand
+import com.microtwitter.commands.WallCommand
 import spock.lang.Specification
-import spock.lang.Unroll
 
 class ParserTest extends Specification {
     private Parser parser
@@ -10,85 +13,23 @@ class ParserTest extends Specification {
         parser = new Parser()
     }
 
-    @Unroll
-    def 'should detect user, intent and payload from all valid commands'() {
-        given:
-        Command command = parser.parse(rawCommand)
-
+    def 'should return a read command'() {
         expect:
-        command.user == user
-        command.intent == intent
-        command.payload == payload
-
-        where:
-        rawCommand                 || user      | intent        | payload
-        'Bob'                      || 'Bob'     | Intent.READ   | ''
-        'Bob -> Good game though.' || 'Bob'     | Intent.POST   | 'Good game though.'
-        'Charlie follows Bob'      || 'Charlie' | Intent.FOLLOW | 'Bob'
-        'Charlie wall'             || 'Charlie' | Intent.WALL   | ''
+        parser.parse2('Bob') instanceof ReadCommand
     }
 
-    def 'should detect user is Bob when command is: Bob'() {
-        when:
-        Command command = parser.parse('Bob')
-
-        then:
-        command.user == 'Bob'
+    def 'should return a post command'() {
+        expect:
+        parser.parse2('Bob -> Good game though.') instanceof PostCommand
     }
 
-    def 'should detect intent is reading when command is: Bob'() {
-        when:
-        Command command = parser.parse('Bob')
-
-        then:
-        command.intent == Intent.READ
+    def 'should return a follow command'() {
+        expect:
+        parser.parse2('Charlie follows Bob') instanceof FollowCommand
     }
 
-    def 'should detect user is Bob when command is: Bob -> Good game though.'() {
-        when:
-        Command command = parser.parse('Bob -> Good game though.')
-
-        then:
-        command.user == 'Bob'
-    }
-
-    def 'should detect intent is posting when command is: Bob -> Good game though.'() {
-        when:
-        Command command = parser.parse('Bob -> Good game though.')
-
-        then:
-        command.intent == Intent.POST
-    }
-
-    def 'should detect user is Charlie when command is: Charlie follows Bob'() {
-        when:
-        Command command = parser.parse('Charlie follows Bob')
-
-        then:
-        command.user == 'Charlie'
-    }
-
-    def 'should detect intent is to follow when command is: Charlie follows Bob'() {
-        when:
-        Command command = parser.parse('Charlie follows Bob')
-
-        then:
-        command.intent == Intent.FOLLOW
-    }
-
-    def 'should detect Bob is the followee when command is: Charlie follows Bob'() {
-        when:
-        Command command = parser.parse('Charlie follows Bob')
-
-        then:
-        command.payload == 'Bob'
-    }
-
-    def 'should detect intent is wall when command is: Charlie wall'() {
-        when:
-        Command command = parser.parse('Charlie wall')
-
-        then:
-        command.intent == Intent.WALL
+    def 'should return a wall command'() {
+        expect:
+        parser.parse2('Charlie wall') instanceof WallCommand
     }
 }
