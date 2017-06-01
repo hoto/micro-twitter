@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class FollowCommandTest extends Specification {
 
-    def 'should print user message when executed'() {
+    def 'should follow user when executed'() {
         given:
         User user = Mock(User)
         User folowee = Mock(User)
