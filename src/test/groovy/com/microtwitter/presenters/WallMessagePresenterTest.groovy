@@ -8,13 +8,13 @@ import spock.lang.Unroll
 
 import static java.util.concurrent.TimeUnit.*
 
-class ConsoleMessagePresenterTest extends Specification {
+class WallMessagePresenterTest extends Specification {
 
     @Unroll
     def 'should return message in "<user_name> - <message> (<elapsed_time>)" format'() {
         given:
         Clock clock = new FixedClock()
-        ConsoleMessagePresenter presenter = new ConsoleMessagePresenter(clock)
+        MessagePresenter presenter = new WallMessagePresenter(clock)
         Message message = new Message(user, text, 0)
 
         and:

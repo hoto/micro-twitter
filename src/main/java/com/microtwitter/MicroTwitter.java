@@ -4,8 +4,6 @@ import com.microtwitter.commands.Command;
 import com.microtwitter.commands.CommandFactory;
 import com.microtwitter.io.Console;
 import com.microtwitter.io.Parser;
-import com.microtwitter.presenters.ConsoleMessagePresenter;
-import com.microtwitter.presenters.MessagePresenter;
 import com.microtwitter.time.Clock;
 import com.microtwitter.time.SystemClock;
 import com.microtwitter.users.UserRepository;
@@ -18,8 +16,7 @@ public class MicroTwitter {
 
     public MicroTwitter(Clock clock, Console console) {
         UserRepository userRepository = new UserRepository(clock);
-        MessagePresenter messagePresenter = new ConsoleMessagePresenter(clock);
-        CommandFactory commandFactory = new CommandFactory(userRepository, messagePresenter);
+        CommandFactory commandFactory = new CommandFactory(userRepository, clock);
         this.parser = new Parser(commandFactory);
         this.console = console;
     }

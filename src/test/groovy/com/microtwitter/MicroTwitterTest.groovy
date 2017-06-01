@@ -34,7 +34,7 @@ class MicroTwitterTest extends Specification {
         1 * console.writeOutput('Enter command (exit to close):')
         1 * console.getInput() >> { time(0); 'Alice -> I love the weather today' }
         1 * console.getInput() >> { time(5); 'Alice' }
-        1 * console.writeOutput('Alice - I love the weather today (5 minutes ago)')
+        1 * console.writeOutput('I love the weather today (5 minutes ago)')
         1 * console.getInput() >> 'exit'
     }
 
@@ -49,16 +49,17 @@ class MicroTwitterTest extends Specification {
         1 * console.getInput() >> { time(4); 'Bob -> Good game though.' }
 
         1 * console.getInput() >> { time(5); 'Alice' }
-        1 * console.writeOutput('Alice - I love the weather today (5 minutes ago)')
+        1 * console.writeOutput('I love the weather today (5 minutes ago)')
 
         1 * console.getInput() >> { time(5); 'Bob' }
-        1 * console.writeOutput('Bob - Good game though. (1 minute ago)')
-        1 * console.writeOutput('Bob - Damn! We lost! (2 minutes ago)')
+        1 * console.writeOutput('Good game though. (1 minute ago)')
+        1 * console.writeOutput('Damn! We lost! (2 minutes ago)')
 
         1 * console.getInput() >> { time(6); "Charlie -> I'm in New York today! Anyone want to have a coffee?" }
 
         1 * console.getInput() >> { time(7); "Charlie follows Alice" }
         1 * console.getInput() >> { time(8); "Charlie wall" }
+        1 * console.writeOutput("Charlie - I'm in New York today! Anyone want to have a coffee? (2 minutes ago)")
         1 * console.writeOutput('Alice - I love the weather today (8 minutes ago)')
 
         1 * console.getInput() >> { time(9); "Charlie follows Bob" }
