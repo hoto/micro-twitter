@@ -4,8 +4,6 @@ import com.microtwitter.io.Console
 import com.microtwitter.time.FixedClock
 import spock.lang.Specification
 
-import java.util.concurrent.TimeUnit
-
 import static java.util.concurrent.TimeUnit.SECONDS
 
 class MicroTwitterTest extends Specification {

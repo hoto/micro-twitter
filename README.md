@@ -1,6 +1,7 @@
 # Micro Twitter
 
 A console-based micro twitter in Java.
+[![CircleCI](https://circleci.com/gh/hoto/micro-twitter/tree/master.svg?style=svg)](https://circleci.com/gh/hoto/micro-twitter/tree/master)
 
 ### Usage:
 
