@@ -25,6 +25,7 @@ public class User {
 
     public void post(String text) {
         messages.add(new Message(name, text, clock.millis()));
+        Collections.sort(messages);
     }
 
     public List<Message> wall() {

@@ -58,7 +58,7 @@ class UserTest extends Specification {
         alice.timeline().get(0).timestamp == 1000
     }
 
-    def 'should store accurate timestamps with the messages when user posted consecutively'() {
+    def 'should store messages chronologically when user posted consecutively'() {
         when:
         clock.setMillis(1000)
         bob.post('Damn! We lost!')
@@ -66,10 +66,10 @@ class UserTest extends Specification {
         bob.post('Good game though.')
 
         then:
-        bob.timeline().get(0).text == 'Damn! We lost!'
-        bob.timeline().get(0).timestamp == 1000
-        bob.timeline().get(1).text == 'Good game though.'
-        bob.timeline().get(1).timestamp == 2000
+        bob.timeline().get(0).text == 'Good game though.'
+        bob.timeline().get(0).timestamp == 2000
+        bob.timeline().get(1).text == 'Damn! We lost!'
+        bob.timeline().get(1).timestamp == 1000
     }
 
     def 'should return empty wall when user has no messages and follows no one'() {
