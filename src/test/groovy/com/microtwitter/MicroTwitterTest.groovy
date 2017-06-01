@@ -26,10 +26,13 @@ class MicroTwitterTest extends Specification {
 
     def 'should display a wall'() {
         when:
+        clock.setMillis(2000)
         twitter.start()
 
         then:
-        console.getInput() >> 'Alice -> Hi' >> 'Alice' >> 'exit'
+        1 * console.getInput() >> 'Alice -> Hi'
+        1 * console.getInput() >> 'Alice'
+        1 * console.getInput() >> 'exit'
         1 * console.writeOutput('Enter command (exit to close):')
         1 * console.writeOutput('Alice - Hi (now)')
     }
