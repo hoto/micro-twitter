@@ -22,7 +22,7 @@ Example:
     Alice - I love the weather today (17 seconds ago)
     > exit
 
-![Example](https://raw.github.com/hoto/micro-twitter/.screens/01_example.png)
+![Example](https://raw.githubusercontent.com/hoto/micro-twitter/master/.screens/01_example.png)
 
 ### Run
 
