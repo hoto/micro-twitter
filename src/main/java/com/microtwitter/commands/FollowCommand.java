@@ -13,7 +13,7 @@ public class FollowCommand implements Command {
     }
 
     @Override
-    public void execute(Console out) {
+    public void execute(Console console) {
         user.follow(folowee);
     }
 }

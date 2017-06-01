@@ -4,8 +4,8 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Console {
-    private Scanner scanner;
-    private PrintStream stdout;
+    private final Scanner scanner;
+    private final PrintStream stdout;
 
     public Console(Scanner scanner, PrintStream stdout) {
         this.scanner = scanner;

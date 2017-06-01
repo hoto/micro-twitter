@@ -11,7 +11,7 @@ import static java.util.concurrent.TimeUnit.*
 class TimelineMessagePresenterTest extends Specification {
 
     @Unroll
-    def 'should return message in "<user_name> - <message> (<elapsed_time>)" format'() {
+    def 'should return message in "<message> (<elapsed_time>)" format'() {
         given:
         Clock clock = new FixedClock()
         MessagePresenter presenter = new TimelineMessagePresenter(clock)

@@ -14,10 +14,10 @@ public class WallCommand implements Command {
     }
 
     @Override
-    public void execute(Console out) {
+    public void execute(Console console) {
         user.wall()
             .stream()
             .map(presenter::present)
-            .forEach(out::writeOutput);
+            .forEach(console::writeOutput);
     }
 }

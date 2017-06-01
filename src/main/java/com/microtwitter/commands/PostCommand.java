@@ -13,7 +13,7 @@ public class PostCommand implements Command {
     }
 
     @Override
-    public void execute(Console out) {
+    public void execute(Console console) {
         user.post(message);
     }
 }

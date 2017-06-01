@@ -15,7 +15,7 @@ Example:
 
     > Alice -> I love the weather today
     > Alice
-    Alice - I love the weather today (3 seconds ago)
+    I love the weather today (3 seconds ago)
     > Bob -> I'm in New York today!
     > Bob follows Alice
     > Bob wall
