@@ -4,6 +4,10 @@ import com.microtwitter.io.Console
 import com.microtwitter.time.FixedClock
 import spock.lang.Specification
 
+import java.util.concurrent.TimeUnit
+
+import static java.util.concurrent.TimeUnit.SECONDS
+
 class MicroTwitterTest extends Specification {
     private FixedClock clock
     private Console console
@@ -26,14 +30,13 @@ class MicroTwitterTest extends Specification {
 
     def 'should display a wall'() {
         when:
-        clock.setMillis(2000)
         twitter.start()
 
         then:
         1 * console.getInput() >> 'Alice -> Hi'
-        1 * console.getInput() >> 'Alice'
+        1 * console.getInput() >> { clock.setMillis(SECONDS.toMillis(3)); 'Alice' }
         1 * console.getInput() >> 'exit'
         1 * console.writeOutput('Enter command (exit to close):')
-        1 * console.writeOutput('Alice - Hi (now)')
+        1 * console.writeOutput('Alice - Hi (3 seconds ago)')
     }
 }
