@@ -1,5 +1,6 @@
 package com.microtwitter.commands
 
+import com.microtwitter.io.Console
 import com.microtwitter.presenters.PlainMessagePresenter
 import com.microtwitter.presenters.MessagePresenter
 import com.microtwitter.time.Clock
@@ -11,14 +12,14 @@ class WallCommandTest extends Specification {
     private User alice
     private User bob
     private WallCommand command
-    private PrintStream out
+    private Console console
 
     def setup() {
         presenter = new PlainMessagePresenter()
         alice = new User('Alice', Mock(Clock))
         bob = new User('Bob', Mock(Clock))
         command = new WallCommand(alice, presenter)
-        out = Mock(PrintStream)
+        console = Mock(Console)
     }
 
     def 'should print user message when executed'() {
@@ -26,10 +27,10 @@ class WallCommandTest extends Specification {
         alice.post('I love the weather today')
 
         and:
-        command.execute(out)
+        command.execute(console)
 
         then:
-        1 * out.println('Alice - I love the weather today')
+        1 * console.writeOutput('Alice - I love the weather today')
     }
 
     def 'should print user and folowee messages when executed'() {
@@ -39,10 +40,10 @@ class WallCommandTest extends Specification {
         bob.post('Damn! We lost!')
 
         and:
-        command.execute(out)
+        command.execute(console)
 
         then:
-        1 * out.println('Alice - I love the weather today')
-        1 * out.println('Bob - Damn! We lost!')
+        1 * console.writeOutput('Alice - I love the weather today')
+        1 * console.writeOutput('Bob - Damn! We lost!')
     }
 }

@@ -1,5 +1,6 @@
 package com.microtwitter.commands
 
+import com.microtwitter.io.Console
 import com.microtwitter.users.User
 import spock.lang.Specification
 
@@ -10,10 +11,10 @@ class PostCommandTest extends Specification {
         User user = Mock(User)
         String message = 'I love the weather today'
         PostCommand command = new PostCommand(user, message)
-        PrintStream out = Mock(PrintStream)
+        Console console = Mock(Console)
 
         when:
-        command.execute(out)
+        command.execute(console)
 
         then:
         1 * user.post('I love the weather today')

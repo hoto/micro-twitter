@@ -1,9 +1,8 @@
 package com.microtwitter.commands;
 
+import com.microtwitter.io.Console;
 import com.microtwitter.presenters.MessagePresenter;
 import com.microtwitter.users.User;
-
-import java.io.PrintStream;
 
 public class ReadCommand implements Command {
     private final User user;
@@ -15,10 +14,10 @@ public class ReadCommand implements Command {
     }
 
     @Override
-    public void execute(PrintStream out) {
+    public void execute(Console out) {
         user.timeline()
             .stream()
             .map(presenter::present)
-            .forEach(out::println);
+            .forEach(out::writeOutput);
     }
 }

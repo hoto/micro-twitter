@@ -1,5 +1,6 @@
 package com.microtwitter.commands
 
+import com.microtwitter.io.Console
 import com.microtwitter.presenters.MessagePresenter
 import com.microtwitter.presenters.PlainMessagePresenter
 import com.microtwitter.time.Clock
@@ -10,13 +11,13 @@ class ReadCommandTest extends Specification {
     private User alice
     private MessagePresenter presenter
     private ReadCommand command
-    private PrintStream out
+    private Console console
 
     def setup() {
         alice = new User('Alice', Mock(Clock))
         presenter = new PlainMessagePresenter()
         command = new ReadCommand(alice, presenter)
-        out = Mock(PrintStream)
+        console = Mock(Console)
     }
 
     def 'should print user message when executed'() {
@@ -24,10 +25,10 @@ class ReadCommandTest extends Specification {
         alice.post('I love the weather today')
 
         and:
-        command.execute(out)
+        command.execute(console)
 
         then:
-        1 * out.println('Alice - I love the weather today')
+        1 * console.writeOutput('Alice - I love the weather today')
     }
 
     def 'should print two different user messages when executed'() {
@@ -36,11 +37,11 @@ class ReadCommandTest extends Specification {
         alice.post('Really nice weather')
 
         and:
-        command.execute(out)
+        command.execute(console)
 
         then:
-        1 * out.println('Alice - I love the weather today')
-        1 * out.println('Alice - Really nice weather')
+        1 * console.writeOutput('Alice - I love the weather today')
+        1 * console.writeOutput('Alice - Really nice weather')
     }
 
     def 'should print same user message twice when executed twice'() {
@@ -48,10 +49,10 @@ class ReadCommandTest extends Specification {
         alice.post('I love the weather today')
 
         and:
-        command.execute(out)
-        command.execute(out)
+        command.execute(console)
+        command.execute(console)
 
         then:
-        2 * out.println('Alice - I love the weather today')
+        2 * console.writeOutput('Alice - I love the weather today')
     }
 }

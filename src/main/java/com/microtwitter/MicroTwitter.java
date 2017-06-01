@@ -10,27 +10,25 @@ import com.microtwitter.time.Clock;
 import com.microtwitter.time.SystemClock;
 import com.microtwitter.users.UserRepository;
 
-import java.io.PrintStream;
 import java.util.Scanner;
 
 public class MicroTwitter {
-    private static PrintStream stdout = System.out;
-
+    private final Parser parser;
     private final Console console;
-    private final Clock clock = new SystemClock();
-    private final UserRepository userRepository = new UserRepository(clock);
-    private final MessagePresenter messagePresenter = new ConsoleMessagePresenter(clock);
-    private final CommandFactory commandFactory = new CommandFactory(userRepository, messagePresenter);
-    private final Parser parser = new Parser(commandFactory);
 
-    public MicroTwitter(Console console) {
+    public MicroTwitter(Clock clock, Console console) {
+        UserRepository userRepository = new UserRepository(clock);
+        MessagePresenter messagePresenter = new ConsoleMessagePresenter(clock);
+        CommandFactory commandFactory = new CommandFactory(userRepository, messagePresenter);
+        this.parser = new Parser(commandFactory);
         this.console = console;
     }
 
     public static void main(String... args) {
+        Clock clock = new SystemClock();
         Scanner stdin = new Scanner(System.in);
-        Console console = new Console(stdin);
-        new MicroTwitter(console).start();
+        Console console = new Console(stdin, System.out);
+        new MicroTwitter(clock, console).start();
     }
 
     public void start() {
@@ -39,7 +37,7 @@ public class MicroTwitter {
     }
 
     private void printHelp() {
-        stdout.println("Enter command (exit to close):");
+        console.writeOutput("Enter command (exit to close):");
     }
 
     private void loop() {
@@ -52,7 +50,7 @@ public class MicroTwitter {
 
     private void executeCommand(String line) {
         Command command = parser.parse(line);
-        command.execute(stdout);
+        command.execute(console);
     }
 
 }

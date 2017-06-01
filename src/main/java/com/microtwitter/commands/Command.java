@@ -1,7 +1,7 @@
 package com.microtwitter.commands;
 
-import java.io.PrintStream;
+import com.microtwitter.io.Console;
 
 public interface Command {
-    void execute(PrintStream out);
+    void execute(Console out);
 }

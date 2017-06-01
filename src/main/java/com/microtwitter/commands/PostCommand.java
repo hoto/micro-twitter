@@ -1,8 +1,7 @@
 package com.microtwitter.commands;
 
+import com.microtwitter.io.Console;
 import com.microtwitter.users.User;
-
-import java.io.PrintStream;
 
 public class PostCommand implements Command {
     private final User user;
@@ -14,7 +13,7 @@ public class PostCommand implements Command {
     }
 
     @Override
-    public void execute(PrintStream out) {
+    public void execute(Console out) {
         user.post(message);
     }
 }

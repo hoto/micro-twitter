@@ -1,5 +1,6 @@
 package com.microtwitter.commands
 
+import com.microtwitter.io.Console
 import com.microtwitter.users.User
 import spock.lang.Specification
 
@@ -10,10 +11,10 @@ class FollowCommandTest extends Specification {
         User user = Mock(User)
         User folowee = Mock(User)
         FollowCommand command = new FollowCommand(user, folowee)
-        PrintStream out = Mock(PrintStream)
+        Console console = Mock(Console)
 
         when:
-        command.execute(out)
+        command.execute(console)
 
         then:
         1 * user.follow(folowee)
