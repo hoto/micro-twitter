@@ -21,7 +21,9 @@ Example:
     Bob - I'm in New York today! (8 seconds ago)
     Alice - I love the weather today (17 seconds ago)
     > exit
-    
+
+![Example](https://raw.github.com/hoto/micro-twitter/.screens/01_example.png)
+
 ### Run
 
 On windows use `gradlew.bat` instead of `./gradlew` to build.
