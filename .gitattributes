@@ -2,3 +2,6 @@
 
 *.png binary
 *.jpg binary
+*.jar binary
+
+gradlew.bat text eol=crlf
